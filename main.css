@@ -451,3 +451,10 @@ div.taken, div.planned, div.options {
     width: 100%;
     margin-bottom: 5px;
 }
+
+div.hidden{
+    display: none;
+}
+div.visible{
+    display: block;
+}

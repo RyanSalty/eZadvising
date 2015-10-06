@@ -31,6 +31,12 @@ $_SESSION['token'] = "ABC";
                 <th>Requirements</th>
             </tr>
         </table>
+        <select id="select" onchange="filterState()" style="margin-bottom:15px">
+            <option id="all" value="0">All</option>
+            <option id="1" value="1">Core</option>
+            <option id="2" value="2">Foundation</option>
+            <option id="3" value="3">Major</option>
+        </select>
         <div id="currentState">
 
         </div>

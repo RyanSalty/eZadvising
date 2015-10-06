@@ -22,6 +22,11 @@ function processReqUpdate(req, update) {
     //build base classes
     var classStr = "req_box";
     //TODO: add classes for category
+//    var category = req.category;
+    // From the database
+    // 1 = Core
+    // 2 = Foundation
+    // 3 = Major
     /* if(req.category==2) classStr+=" foundation";
      else if(req.category==3) classStr+=" major";
      */
@@ -254,10 +259,13 @@ function processReqUpdate(req, update) {
 
     //Add stats to right side box
     $(newElWorking).append("<span class='stats'> need:" + needed + "</span>");
+    //ADDED SPG
+    $(newElWorking).attr("category", req['category']);
 
 
     // groupName not currently used
     $(newEl).attr("groupName", req['groupName']);
+    $(newEl).attr("category", req['category']);
 
 
     //add the jquery data object - TODO check if already added
@@ -442,8 +450,60 @@ function initState() {
 
 }//end function
 
+function filterState() {
+//This currently will filter both the requirement and working side of the code. If the class only decides to do the req side we can eliminate stillRequiredList code.
 
+   var chosen = document.getElementById("select");
+   var selectNumber = chosen.value;
 
+    if(selectNumber == 0){
+        $('#currentState').children('div').each(function(){
+            var innerDivId = $(this).attr('id');
+            var currReqBox = document.getElementById(innerDivId)
+            currReqBox.style.display = "block";
+        });
+        $('#stillRequiredList').children('div').each(function(){
+            var innerDivId = $(this).attr('id');
+            var currReqBox = document.getElementById(innerDivId)
+            currReqBox.style.display = "block";
+        });
+        return;
+    }
+
+//    console.log(selectNumber);
+
+    $('#currentState').children('div').each(function(){
+        var innerDivId = $(this).attr('id');
+//        console.log(innerDivId);
+
+        var currReqBox = document.getElementById(innerDivId);
+        var currCat = currReqBox.getAttribute('category');
+
+        console.log(currCat);
+        if(currCat == selectNumber){
+            currReqBox.style.display = "block";
+//            console.log("in the if statement with val of " + value);
+//            console.log(currReqBox.category);
+        }else{
+            currReqBox.style.display = "none";
+        }
+    });
+    $('#stillRequiredList').children('div').each(function(){
+        var innerDivId = $(this).attr('id');
+//        console.log(innerDivId);
+
+        var currReqBox = document.getElementById(innerDivId);
+        var currCat = currReqBox.getAttribute('category');
+
+        console.log(currCat);
+        if(currCat == selectNumber){
+            currReqBox.style.display = "block";
+        }else{
+            currReqBox.style.display = "none";
+        }
+    });
+
+}
 
 
 function initSemesterStart() {
@@ -477,7 +537,7 @@ function initSemesterStart() {
     var year = startYear;
     var sem = startSem;
 
-    for (i = 0; i < 12; i++) {
+    for (i = 0; i < 24; i++) {
 
         var newElStr = '<div class="semester_block"></div>';
         var newEl = $(newElStr);
