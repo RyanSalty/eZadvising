@@ -22,6 +22,11 @@ function processReqUpdate(req, update) {
     //build base classes
     var classStr = "req_box";
     //TODO: add classes for category
+//    var category = req.category;
+    // From the database
+    // 1 = Core
+    // 2 = Foundation
+    // 3 = Major
     /* if(req.category==2) classStr+=" foundation";
      else if(req.category==3) classStr+=" major";
      */
@@ -254,10 +259,13 @@ function processReqUpdate(req, update) {
 
     //Add stats to right side box
     $(newElWorking).append("<span class='stats'> need:" + needed + "</span>");
+    //ADDED SPG
+    $(newElWorking).attr("category", req['category']);
 
 
     // groupName not currently used
     $(newEl).attr("groupName", req['groupName']);
+    $(newEl).attr("category", req['category']);
 
 
     //add the jquery data object - TODO check if already added
@@ -343,7 +351,6 @@ function processReqUpdate(req, update) {
 
 }
 
-
 function getSemesterName(code) {
     //keep in sync with semester_code table
     // but don't need to query database for this for performance reasons
@@ -407,171 +414,6 @@ function showHideSummers() {
     $(".semester_block.minor").toggle();
 }
 
-function semShown(dmv){
- var now = new Date();
- var year = now.getFullYear();
- var lastYear = year + 5;
- var end2Year = year + 2;
- var end4Year = year + 4;
- alert('in semShown function ' + dmv + 'passed to function.');
-    switch (dmv){
-    //decrease to 2 years
-        case "2":
-        alert("decrese to 2 years.");
-    //hide from 3-5 year
-            for(var j = 0; j < 3; j++){
-                for(var i = 6; i > 1; i--){
-                    var id = "s" + lastYear + i;
-                //          alert("id created: " + id);
-                    document.getElementById(id).style.visibility = "hidden";
-                }
-                lastYear--;
-                var id2 = "s" + lastYear + "1";
-               // alert("id2 created:" + id2);
-                document.getElementById(id2).style.visibility = "hidden";
-            }
-        break;
-
-    //increase to 5 years
-        case "5":
-        alert("increase to 5 years.");
-            //id = "s" + end2Year + "1";
-            //document.getElementById(id).style.visibility = "visible";
-            for(var k = 0; k < 4; k++){
-                for(var l = 6; l > 0 ; l--){
-                id = "s" + end2Year + l;
-               // alert(id);
-                document.getElementById(id).style.visibility = "visible";
-                }
-                end2Year++;
-            }
-        break;
-
-        case "4" :
-            alert("back to default 4");
-           for(var n = end4Year; n > year; n--){
-              // alert("outside: s"+n + "1");
-            for(var m = 2; m < 7; m++){
-                id = "s" + end4Year + m;
-              //  alert(id);
-                document.getElementById(id).style.visibility = "visible";
-            }
-               end4Year--;
-               id = "s"+end4Year + "1";
-               //alert(id);
-               document.getElementById(id).style.visibility = "visible";
-           }
-            end4Year = year + 4;
-            for(var p = 0; p < 1; p++){
-                id = "s" + end4Year + "1";
-                //alert(id);
-                document.getElementById(id).style.visibility = "hidden";
-                end4Year ++;
-              for(var q = 2; q < 7; q++){
-                  id = "s" + end4Year + q;
-                  //alert(id);
-                  document.getElementById(id).style.visibility = "hidden";
-
-              }
-            }
-
-   }
-}
-
-
-function verticalScaling(){
-	
-	var classTotal;
-	var year = 2016;
-	var sem = 1;
-	
-	classTotal = $('#p20151 div.req_box').length;
-	for(i=0;i<11;i++){
-		var pBoxId = "p" + year + sem;
-		
-		if($('#' + pBoxId + ' div.req_box').length > classTotal){
-			classTotal = $('#' + pBoxId + ' div.req_box').length;
-		}
-		sem++;
-			
-		if(sem >6){
-			sem = 2;
-			year++;
-		}
-	}
-	if(classTotal > 5){
-		var pHeight = classTotal * 5;
-		var sHeight = classTotal * 5.75;
-		var semester_plan = document.getElementById("s20151");
-		semester_plan.style.height = sHeight + "rem";
-		
-		var semester_plan2 = document.getElementById("p20151");
-		semester_plan2.style.height = pHeight + "rem";
-		
-		year = 2016;
-		sem = 1;
-		for(i=0;i<11;i++){
-		var sBoxId = "s" + year + sem;
-		semester_plan = document.getElementById(sBoxId);
-		semester_plan.style.height =  sHeight + "rem";
-		
-		var boxId = "p" + year + sem;
-		semester_plan2 = document.getElementById(boxId);
-		semester_plan2.style.height = pHeight + "rem";
-		
-		sem++;
-		
-		if(sem >6){
-			sem = 2;
-			year++;
-		}
-		}
-
-	}
-	else{
-		var semester_plan = document.getElementById("s20151");
-		semester_plan.style.height = "26rem";
-		
-		var semester_plan2 = document.getElementById("p20151");
-		semester_plan2.style.height = "22rem";
-		
-		year = 2016;
-		sem = 1;
-		for(i=0;i<11;i++){
-			var sBoxId = "s" + year + sem;
-			semester_plan = document.getElementById(sBoxId);
-			semester_plan.style.height =  "26rem";
-			
-			var boxId = "p" + year + sem;
-			semester_plan2 = document.getElementById(boxId);
-			semester_plan2.style.height = "22rem";
-			
-			sem++;
-			
-			if(sem >6){
-				sem = 2;
-				year++;
-			}
-		}
-		
-	}
-
-}
-
-function clearPlan($token, $studentId) {
-    //alert("in getCurrentState");
-
-	var c = confirm("Are you sure you want to clear all planned classes?"); //confirmation prompt
-	if(c==true){
-		$.ajax({
-			url: "clearPlan.php",
-			success: function (result) {
-				window.location.reload();
-				return result;
-			}//end success
-		});//end ajax
-		}
-	}//end function getCurrentState
 
 function initState() {
 
@@ -608,8 +450,60 @@ function initState() {
 
 }//end function
 
+function filterState() {
+//This currently will filter both the requirement and working side of the code. If the class only decides to do the req side we can eliminate stillRequiredList code.
 
+   var chosen = document.getElementById("select");
+   var selectNumber = chosen.value;
 
+    if(selectNumber == 0){
+        $('#currentState').children('div').each(function(){
+            var innerDivId = $(this).attr('id');
+            var currReqBox = document.getElementById(innerDivId)
+            currReqBox.style.display = "block";
+        });
+        $('#stillRequiredList').children('div').each(function(){
+            var innerDivId = $(this).attr('id');
+            var currReqBox = document.getElementById(innerDivId)
+            currReqBox.style.display = "block";
+        });
+        return;
+    }
+
+//    console.log(selectNumber);
+
+    $('#currentState').children('div').each(function(){
+        var innerDivId = $(this).attr('id');
+//        console.log(innerDivId);
+
+        var currReqBox = document.getElementById(innerDivId);
+        var currCat = currReqBox.getAttribute('category');
+
+        console.log(currCat);
+        if(currCat == selectNumber){
+            currReqBox.style.display = "block";
+//            console.log("in the if statement with val of " + value);
+//            console.log(currReqBox.category);
+        }else{
+            currReqBox.style.display = "none";
+        }
+    });
+    $('#stillRequiredList').children('div').each(function(){
+        var innerDivId = $(this).attr('id');
+//        console.log(innerDivId);
+
+        var currReqBox = document.getElementById(innerDivId);
+        var currCat = currReqBox.getAttribute('category');
+
+        console.log(currCat);
+        if(currCat == selectNumber){
+            currReqBox.style.display = "block";
+        }else{
+            currReqBox.style.display = "none";
+        }
+    });
+
+}
 
 
 function initSemesterStart() {
@@ -643,8 +537,7 @@ function initSemesterStart() {
     var year = startYear;
     var sem = startSem;
 
-
-    for (i = 0; i < 30; i++) {
+    for (i = 0; i < 24; i++) {
 
         var newElStr = '<div class="semester_block"></div>';
         var newEl = $(newElStr);
@@ -661,8 +554,6 @@ function initSemesterStart() {
         var headerStr = getSemesterName(sem) + " " + year;
         $(newEl).append("<header class='semester_name'>" + headerStr + "</header>");
 
-
-
         var innerDivStr = '<div class="target semester_plan"></div>';
         var innerDiv = $(innerDivStr);
         var innerDivId = "p" + year + sem;
@@ -673,10 +564,6 @@ function initSemesterStart() {
 
 
         $('#thePlan').append(newEl);
-
-        if(i >= 24){
-            document.getElementById(newElId).style.visibility = "hidden";
-        }
 
         //add the semester to the semList drop-down on right
         var optId = "d" + year + sem;
@@ -742,8 +629,6 @@ function handleDropEventOnRequired(event, ui) {
         $(sel).draggable('option', 'revert', true);
         $(ui.draggable).remove();
     }
-	
-	verticalScaling();
 
 
 }
@@ -880,9 +765,6 @@ function handleDropEventOnWorking(event, ui) {
         console.log("in else");
     }//end else not original move
     //add code for drop-down change
-	
-	
-	verticalScaling();
 
 }//end function
 
@@ -968,8 +850,6 @@ function handleDropEventOnPlan(event, ui) {
 
 
         console.dir("hours: " + hours);
-		
-
 
         //insert into database
         $.ajax({
@@ -1019,8 +899,6 @@ function handleDropEventOnPlan(event, ui) {
 
         //style the copy of requirement still left on working side
         //
-		
-		
 
     }//end if original move
     else if (sourceId.substr(0, 1) == "p") //move from one semester to another
@@ -1117,9 +995,6 @@ function handleDropEventOnPlan(event, ui) {
         //console.log("in else");
     }//end else not original move
     //add code for drop-down change
-	
-	
-	verticalScaling();
 
 }//end function
 
