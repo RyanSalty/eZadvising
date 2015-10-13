@@ -407,6 +407,77 @@ function showHideSummers() {
     $(".semester_block.minor").toggle();
 }
 
+function semShown(dmv){
+ var now = new Date();
+ var year = now.getFullYear();
+ var lastYear = year + 5;
+ var end2Year = year + 2;
+ var end4Year = year + 4;
+ alert('in semShown function ' + dmv + 'passed to function.');
+    switch (dmv){
+    //decrease to 2 years
+        case "2":
+        alert("decrese to 2 years.");
+    //hide from 3-5 year
+            for(var j = 0; j < 3; j++){
+                for(var i = 6; i > 1; i--){
+                    var id = "s" + lastYear + i;
+                //          alert("id created: " + id);
+                    document.getElementById(id).style.visibility = "hidden";
+                }
+                lastYear--;
+                var id2 = "s" + lastYear + "1";
+               // alert("id2 created:" + id2);
+                document.getElementById(id2).style.visibility = "hidden";
+            }
+        break;
+
+    //increase to 5 years
+        case "5":
+        alert("increase to 5 years.");
+            //id = "s" + end2Year + "1";
+            //document.getElementById(id).style.visibility = "visible";
+            for(var k = 0; k < 4; k++){
+                for(var l = 6; l > 0 ; l--){
+                id = "s" + end2Year + l;
+               // alert(id);
+                document.getElementById(id).style.visibility = "visible";
+                }
+                end2Year++;
+            }
+        break;
+
+        case "4" :
+            alert("back to default 4");
+           for(var n = end4Year; n > year; n--){
+              // alert("outside: s"+n + "1");
+            for(var m = 2; m < 7; m++){
+                id = "s" + end4Year + m;
+              //  alert(id);
+                document.getElementById(id).style.visibility = "visible";
+            }
+               end4Year--;
+               id = "s"+end4Year + "1";
+               //alert(id);
+               document.getElementById(id).style.visibility = "visible";
+           }
+            end4Year = year + 4;
+            for(var p = 0; p < 1; p++){
+                id = "s" + end4Year + "1";
+                //alert(id);
+                document.getElementById(id).style.visibility = "hidden";
+                end4Year ++;
+              for(var q = 2; q < 7; q++){
+                  id = "s" + end4Year + q;
+                  //alert(id);
+                  document.getElementById(id).style.visibility = "hidden";
+
+              }
+            }
+
+   }
+}
+
 
 function verticalScaling(){
 	
@@ -572,7 +643,8 @@ function initSemesterStart() {
     var year = startYear;
     var sem = startSem;
 
-    for (i = 0; i < 12; i++) {
+
+    for (i = 0; i < 30; i++) {
 
         var newElStr = '<div class="semester_block"></div>';
         var newEl = $(newElStr);
@@ -589,6 +661,8 @@ function initSemesterStart() {
         var headerStr = getSemesterName(sem) + " " + year;
         $(newEl).append("<header class='semester_name'>" + headerStr + "</header>");
 
+
+
         var innerDivStr = '<div class="target semester_plan"></div>';
         var innerDiv = $(innerDivStr);
         var innerDivId = "p" + year + sem;
@@ -599,6 +673,10 @@ function initSemesterStart() {
 
 
         $('#thePlan').append(newEl);
+
+        if(i >= 24){
+            document.getElementById(newElId).style.visibility = "hidden";
+        }
 
         //add the semester to the semList drop-down on right
         var optId = "d" + year + sem;
