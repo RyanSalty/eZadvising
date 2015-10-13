@@ -265,6 +265,7 @@ function processReqUpdate(req, update) {
 
     // groupName not currently used
     $(newEl).attr("groupName", req['groupName']);
+    //ADDED SPG
     $(newEl).attr("category", req['category']);
 
 
@@ -503,7 +504,7 @@ function filterState() {
         }
     });
 
-}
+} // end of filterState()
 
 
 function initSemesterStart() {
