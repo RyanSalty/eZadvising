@@ -265,6 +265,7 @@ function processReqUpdate(req, update) {
 
     // groupName not currently used
     $(newEl).attr("groupName", req['groupName']);
+    //ADDED SPG
     $(newEl).attr("category", req['category']);
 
 
@@ -451,7 +452,7 @@ function initState() {
 }//end function
 
 function filterState() {
-//This currently will filter both the requirement and working side of the code. If the class only decides to do the req side we can eliminate stillRequiredList code.
+//This currently will filter both the requirement and working side of the code. If the class only decides to do the req side we can eliminate stillRequiredList code. SPG
 
    var chosen = document.getElementById("select");
    var selectNumber = chosen.value;
@@ -503,7 +504,7 @@ function filterState() {
         }
     });
 
-}
+} // end of filterState()
 
 
 function initSemesterStart() {
