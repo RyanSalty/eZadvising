@@ -405,7 +405,8 @@ $(init);
 function showHideSummers() {
     $(".semester_block.minor").toggle();
 }
-
+//#TODO change logic  teal for hidden #odffd9
+//call init state, show all, then based on dmv hide whats needed 
 function semShown(dmv){
  var now = new Date();
  var year = now.getFullYear();
@@ -421,26 +422,26 @@ function semShown(dmv){
             for(var j = 0; j < 3; j++){
                 for(var i = 6; i > 1; i--){
                     var id = "s" + lastYear + i;
-                //          alert("id created: " + id);
-                    document.getElementById(id).style.visibility = "hidden";
+                          alert("id created: " + id);
+                    document.getElementById(id).style.display = "none";
                 }
                 lastYear--;
                 var id2 = "s" + lastYear + "1";
-               // alert("id2 created:" + id2);
-                document.getElementById(id2).style.visibility = "hidden";
+                alert("id2 created:" + id2);
+                document.getElementById(id2).style.display = "none";
             }
         break;
 
     //increase to 5 years
         case "5":
         alert("increase to 5 years.");
-            //id = "s" + end2Year + "1";
-            //document.getElementById(id).style.visibility = "visible";
+            id = "s" + end2Year + "1";
+            document.getElementById(id).style.display = "block";
             for(var k = 0; k < 4; k++){
                 for(var l = 6; l > 0 ; l--){
                 id = "s" + end2Year + l;
-               // alert(id);
-                document.getElementById(id).style.visibility = "visible";
+                alert(id);
+                document.getElementById(id).style.display = "block";
                 }
                 end2Year++;
             }
@@ -449,32 +450,84 @@ function semShown(dmv){
         case "4" :
             alert("back to default 4");
            for(var n = end4Year; n > year; n--){
-              // alert("outside: s"+n + "1");
+               alert("outside: s"+n + "1");
             for(var m = 2; m < 7; m++){
                 id = "s" + end4Year + m;
-              //  alert(id);
-                document.getElementById(id).style.visibility = "visible";
+                alert(id);
+                document.getElementById(id).style.display = "block";
             }
                end4Year--;
                id = "s"+end4Year + "1";
-               //alert(id);
-               document.getElementById(id).style.visibility = "visible";
+               alert(id);
+               document.getElementById(id).style.display = "block";
            }
             end4Year = year + 4;
             for(var p = 0; p < 1; p++){
                 id = "s" + end4Year + "1";
-                //alert(id);
-                document.getElementById(id).style.visibility = "hidden";
+                alert(id);
+                document.getElementById(id).style.display = "none";
                 end4Year ++;
               for(var q = 2; q < 7; q++){
                   id = "s" + end4Year + q;
-                  //alert(id);
-                  document.getElementById(id).style.visibility = "hidden";
+                  alert(id);
+                  document.getElementById(id).style.display = "none";
 
               }
             }
 
    }
+}
+
+function showHideSemesters(){
+  //#TODO how to make hidden semesters come back. would have to be all at once.
+    //alert("clicked");
+    //get date of first planned for student or current semester and show whichever
+// is earlier
+    var now = new Date();
+    var nowYear = now.getFullYear();
+//console.dir("year:"+nowYear);
+    var nowMonth = now.getMonth();
+    var startSem;
+    var startYear;
+
+    if (nowMonth >= 1 && nowMonth <= 5) //spring
+    {
+        startSem = 2;
+        startYear = nowYear;
+    }
+    else if (nowMonth >= 6 && nowMonth <= 12) //fall
+    {
+        startSem = 1;
+        startYear = nowYear;
+    }
+    else {
+        startSem = 2;
+        startYear = nowYear;
+    }
+    //var sem = startSem;
+    var year = startYear;
+
+   // alert("clicked first semester is " + startYear + startSem);
+
+    for(var i = 0; i < 5; i++) {
+       // alert("cs" + year + "1" + " " + document.getElementById("cs" + year + "1").checked);
+
+        if (document.getElementById("cs" + year + "1").checked) {
+            var id = "s" + year + "1";
+            document.getElementById(id).style.display = "none";
+        }
+        year++;
+        for (var j = 2; j < 7; j++) {
+         //   alert("cs" + year + j + " " + document.getElementById("cs" + year + j).checked);
+            if (document.getElementById("cs" + year + j).checked) {
+                var id = "s" + year + j;
+                document.getElementById(id).style.display = "none";
+            }
+        }
+    }
+
+    //loop through all boxes, if check, change display.
+
 }
 
 
@@ -564,7 +617,8 @@ function initSemesterStart() {
         $(newEl).attr('id', newElId);
         console.dir($(newEl).attr('id'));
         var headerStr = getSemesterName(sem) + " " + year;
-        $(newEl).append("<header class='semester_name'>" + headerStr + "</header>");
+        $(newEl).append("<header class='semester_name'>" + headerStr + "<input type='checkbox' name='selected' id = c"+ newElId+"></header>");
+
 
 
 
@@ -580,7 +634,7 @@ function initSemesterStart() {
         $('#thePlan').append(newEl);
 
         if(i >= 24){
-            document.getElementById(newElId).style.visibility = "hidden";
+            document.getElementById(newElId).style.display = "none";
         }
 
         //add the semester to the semList drop-down on right
