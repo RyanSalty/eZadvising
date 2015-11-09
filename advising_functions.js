@@ -451,12 +451,24 @@ function initState() {
 
 }//end function
 
+function isInArray(value, array) {
+    return array.indexOf(value) > -1;
+}
+
 function filterState() {
-//This currently will filter both the requirement and working side of the code. If the class only decides to do the req side we can eliminate stillRequiredList code.
+//This currently will filter both the requirement and working side of the code. If the class only decides to do the req side we can eliminate stillRequiredList code. - SPG
 
-   var chosen = document.getElementById("select");
-   var selectNumber = chosen.value;
+   var chosen= document.getElementById("select");
+//   var selectNumber = chosen.value;
+   var selectNumber = [];
 
+    for (var i=0; i<chosen.length; i++) {
+        if (chosen[i].checked) {
+            selectNumber.push(chosen[i].value);
+        }
+    }
+
+//If All is selected then the number is 0 which just sets all children to block. This is also the default setting. - SPG
     if(selectNumber == 0){
         $('#currentState').children('div').each(function(){
             var innerDivId = $(this).attr('id');
@@ -468,12 +480,17 @@ function filterState() {
             var currReqBox = document.getElementById(innerDivId)
             currReqBox.style.display = "block";
         });
+        $('#filterNotify').children('div').each(function() {
+           var innerDivId = $(this).attr('id');
+           var currNotify = document.getElementById(innerDivId)
+           currNotify.style.display = "block";
+        });
         return;
     }
 
 //    console.log(selectNumber);
-
-    $('#currentState').children('div').each(function(){
+for (var i=0; i<selectNumber.length; i++) {
+    $('#currentState').children('div').each(function () {
         var innerDivId = $(this).attr('id');
 //        console.log(innerDivId);
 
@@ -481,15 +498,16 @@ function filterState() {
         var currCat = currReqBox.getAttribute('category');
 
         console.log(currCat);
-        if(currCat == selectNumber){
+//        if (currCat == selectNumber[i] ) {
+        if (isInArray(currCat,selectNumber)) {
             currReqBox.style.display = "block";
 //            console.log("in the if statement with val of " + value);
 //            console.log(currReqBox.category);
-        }else{
+        } else {
             currReqBox.style.display = "none";
         }
     });
-    $('#stillRequiredList').children('div').each(function(){
+    $('#stillRequiredList').children('div').each(function () {
         var innerDivId = $(this).attr('id');
 //        console.log(innerDivId);
 
@@ -497,12 +515,26 @@ function filterState() {
         var currCat = currReqBox.getAttribute('category');
 
         console.log(currCat);
-        if(currCat == selectNumber){
+//        if (currCat == selectNumber[i]) {
+        if (isInArray(currCat,selectNumber)) {
             currReqBox.style.display = "block";
-        }else{
+        } else {
             currReqBox.style.display = "none";
         }
     });
+    $('#filterNotify').children('div').each(function () {
+        var innerDivId = $(this).attr('id');
+
+        var currNotify = document.getElementById(innerDivId);
+        var currCat = currNotify.getAttribute('title');
+
+        if (isInArray(currCat,selectNumber)) {
+            currNotify.style.display = "block";
+        } else {
+            currNotify.style.display = "none";
+        }
+    });
+}
 
 } // end of filterState()
 
