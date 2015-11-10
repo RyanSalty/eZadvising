@@ -414,6 +414,7 @@ function semShown(dmv){
  var end2Year = year + 2;
  var end4Year = year + 4;
  alert('in semShown function ' + dmv + 'passed to function.');
+    document.getElementById('hide').style.display = "none";
     switch (dmv){
     //decrease to 2 years
         case "2":
@@ -422,12 +423,13 @@ function semShown(dmv){
             for(var j = 0; j < 3; j++){
                 for(var i = 6; i > 1; i--){
                     var id = "s" + lastYear + i;
-                          alert("id created: " + id);
+
+                        //  alert("id created: " + id);
                     document.getElementById(id).style.display = "none";
                 }
                 lastYear--;
                 var id2 = "s" + lastYear + "1";
-                alert("id2 created:" + id2);
+                //alert("id2 created:" + id2);
                 document.getElementById(id2).style.display = "none";
             }
         break;
@@ -437,11 +439,15 @@ function semShown(dmv){
         alert("increase to 5 years.");
             id = "s" + end2Year + "1";
             document.getElementById(id).style.display = "block";
+          //  document.getElementById(id2).style.checked(false);
             for(var k = 0; k < 4; k++){
                 for(var l = 6; l > 0 ; l--){
                 id = "s" + end2Year + l;
-                alert(id);
+                    var id2 = "cs" + lastYear + i;
+                //alert(id);
                 document.getElementById(id).style.display = "block";
+                   // document.getElementById(id2).style.checked(false);
+
                 }
                 end2Year++;
             }
@@ -450,26 +456,31 @@ function semShown(dmv){
         case "4" :
             alert("back to default 4");
            for(var n = end4Year; n > year; n--){
-               alert("outside: s"+n + "1");
+               //alert("outside: s"+n + "1");
             for(var m = 2; m < 7; m++){
                 id = "s" + end4Year + m;
-                alert(id);
+                id2 = "cs" + end4Year + m;
+                //alert(id);
                 document.getElementById(id).style.display = "block";
+                //document.getElementById(id2).style.checked(false);
+
             }
                end4Year--;
                id = "s"+end4Year + "1";
-               alert(id);
+               //alert(id);
                document.getElementById(id).style.display = "block";
+             //  document.getElementById(id2).style.checked(false);
+
            }
             end4Year = year + 4;
             for(var p = 0; p < 1; p++){
                 id = "s" + end4Year + "1";
-                alert(id);
+                //alert(id);
                 document.getElementById(id).style.display = "none";
                 end4Year ++;
               for(var q = 2; q < 7; q++){
                   id = "s" + end4Year + q;
-                  alert(id);
+                  //alert(id);
                   document.getElementById(id).style.display = "none";
 
               }
@@ -507,11 +518,11 @@ function showHideSemesters(){
     //var sem = startSem;
     var year = startYear;
 
-    alert("clicked first semester is " + startYear + startSem);
+    //alert("clicked first semester is " + startYear + startSem);
     //loop through all boxes, if check, change display.
     for(var i = 0; i < 5; i++) {
        // alert("cs" + year + "1" + " " + document.getElementById("cs" + year + "1").checked);
-        if (document.getElementById("cs" + year + "1").checked) {
+        if (document.getElementById("cs" + year + "1").checked){
             var id = "s" + year + "1";
             var id2 = "p" + year + "1";
             //check to see if courses present on hidden semester,
@@ -540,7 +551,10 @@ function showHideSemesters(){
                     var c = confirm("Are you sure you wish to hide "+getSemesterName(j) + " "+year+" with already planned courses?");
                     if (c == true) {
                         document.getElementById(id3).style.display = "none";
-                        $('#required_table').append("Courses Hidden!");
+                        //var img = document.createElement("img");
+                        //img.src = "http://www.google.com/imgres?imgurl=http://studio665.com/wp-content/uploads/2013/11/exclamation-point-sign-red-triangle_2.png&imgrefurl=http://studio665.com/salsa-class-cancelled/&h=256&w=256&tbnid=JPnZgevurUm63M:&docid=-4gwbmEmRQLuwM&ei=MwpCVtGfPMT0mAGZ6pOACg&tbm=isch&ved=0CC0QMygRMBFqFQoTCJGFv4GThskCFUQ6JgodGfUEoA";
+                        var hiddenCourse = "<div id ='hide' class = 'error'>Courses Hidden!</div>";
+                        $('#required_table').append(hiddenCourse);
                     }
                 }
                 else {
