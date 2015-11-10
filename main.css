@@ -316,15 +316,19 @@ div.req_on_plan {
 
 /*********  Styling for  semester PLAN boxes **********/
 
-div.semester_block header.semester_name {
+
+
+div.semester_block header.semester_name{
     background-color: lightgray;
     padding: 4px;
     font-size: .85rem;
 }
 
+
+
 div.semester_block {
     background-color: white;
-    height: 26rem;
+    height: 31.5rem;
     width: 10.25rem;
     border-style: dotted;
     border-width: 1px;
@@ -340,9 +344,12 @@ div.semester_block footer {
     border-top: 1px solid black;
 }
 
+
+
+
 /* actual droppable part */
 div.semester_plan {
-    height: 22rem;
+    height: 26.75rem;
     width: 10rem;
 
 }

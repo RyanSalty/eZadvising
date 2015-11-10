@@ -158,6 +158,40 @@ function validateToken($studentId, $token)
     return true;
 }
 
+function clearSemester($token, $studentId, $year, $semester)
+{
+    try {
+        if (!validateToken($token, $studentId)) {
+            return 403;
+        }
+
+        //  if(empty($studentId)) return 404;
+
+        $conn = new PDO(DBCONNECTSTRING, DBUSER, DBPASSWORD);
+        $sql = 'DELETE FROM course_records WHERE studentId=:studentId AND year=:year AND semesterCode=:semester';
+        //$sql = $sql. ' VALUES (null, :studentId, :courseId, null, :semester, :year, :reqId, 2, :proposedReqId)';
+        $stmt = $conn->prepare($sql);
+
+        $stmt->bindParam(':studentId', $studentId);
+		$stmt->bindParam(':year', $year);
+		$stmt->bindParam(':semester', $semester);
+
+        $success = $stmt->execute();
+        $inserted = $success ? "yes" : "no";
+        echo "<h4>success:" . $inserted . "</h4>";
+
+
+    }//end try
+    catch (PDOException $e) {
+        //echo $sql . "<br>" . $e->getMessage();
+        return 500;
+    }
+
+    $conn = null;
+	return $inserted;
+
+}
+
 function clearPlan($token, $studentId)
 {
     try {
@@ -168,7 +202,7 @@ function clearPlan($token, $studentId)
         //  if(empty($studentId)) return 404;
 
         $conn = new PDO(DBCONNECTSTRING, DBUSER, DBPASSWORD);
-        $sql = 'DELETE FROM course_records WHERE studentId=:studentId';
+        $sql = 'DELETE FROM course_records WHERE studentId=:studentId AND NOT type=1';
         //$sql = $sql. ' VALUES (null, :studentId, :courseId, null, :semester, :year, :reqId, 2, :proposedReqId)';
         $stmt = $conn->prepare($sql);
 

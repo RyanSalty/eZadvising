@@ -254,10 +254,13 @@ function processReqUpdate(req, update) {
 
     //Add stats to right side box
     $(newElWorking).append("<span class='stats'> need:" + needed + "</span>");
+	
+	$(newElWorking).attr("category", req['category']);
 
 
     // groupName not currently used
-    $(newEl).attr("groupName", req['groupName']);
+    $(newEl).attr("groupName", req['groupName']);	
+	$(newEl).attr("category", req['category']);
 
 
     //add the jquery data object - TODO check if already added
@@ -486,7 +489,7 @@ function verticalScaling(){
 	var sem = 1;
 	
 	classTotal = $('#p20151 div.req_box').length;
-	for(i=0;i<11;i++){
+	for(i=0;i<24;i++){
 		var pBoxId = "p" + year + sem;
 		
 		if($('#' + pBoxId + ' div.req_box').length > classTotal){
@@ -495,13 +498,13 @@ function verticalScaling(){
 		sem++;
 			
 		if(sem >6){
-			sem = 2;
+			sem = 1;
 			year++;
 		}
 	}
-	if(classTotal > 5){
-		var pHeight = classTotal * 5;
-		var sHeight = classTotal * 5.75;
+	if(classTotal >= 5){
+		var pHeight = classTotal * 6;
+		var sHeight = classTotal * 6.50;
 		var semester_plan = document.getElementById("s20151");
 		semester_plan.style.height = sHeight + "rem";
 		
@@ -510,7 +513,7 @@ function verticalScaling(){
 		
 		year = 2016;
 		sem = 1;
-		for(i=0;i<11;i++){
+		for(i=0;i<24;i++){
 		var sBoxId = "s" + year + sem;
 		semester_plan = document.getElementById(sBoxId);
 		semester_plan.style.height =  sHeight + "rem";
@@ -522,7 +525,7 @@ function verticalScaling(){
 		sem++;
 		
 		if(sem >6){
-			sem = 2;
+			sem = 1;
 			year++;
 		}
 		}
@@ -530,26 +533,26 @@ function verticalScaling(){
 	}
 	else{
 		var semester_plan = document.getElementById("s20151");
-		semester_plan.style.height = "26rem";
+		semester_plan.style.height = "32.5rem";
 		
 		var semester_plan2 = document.getElementById("p20151");
-		semester_plan2.style.height = "22rem";
+		semester_plan2.style.height = "29.75rem";
 		
 		year = 2016;
 		sem = 1;
-		for(i=0;i<11;i++){
+		for(i=0;i<24;i++){
 			var sBoxId = "s" + year + sem;
 			semester_plan = document.getElementById(sBoxId);
-			semester_plan.style.height =  "26rem";
+			semester_plan.style.height =  "32.5rem";
 			
 			var boxId = "p" + year + sem;
 			semester_plan2 = document.getElementById(boxId);
-			semester_plan2.style.height = "22rem";
+			semester_plan2.style.height = "29.75rem";
 			
 			sem++;
 			
 			if(sem >6){
-				sem = 2;
+				sem = 1;
 				year++;
 			}
 		}
@@ -558,20 +561,42 @@ function verticalScaling(){
 
 }
 
-function clearPlan($token, $studentId) {
-    //alert("in getCurrentState");
-
+function clearSemester(innerDivId){ //function called by button in each semester block div. clears all classes from plan in that semester.
+	//TODO optimize code
+	alert("in clearsemester");
+	//var innerDivId = $(this).attr("id");
+	var str = innerDivId.split("");
+	var year = str[1] + str[2] + str[3] + str[4];
+	var semester = str[5];
+	alert(year);
+	alert(semester);
+	
+	var c = confirm("Are you sure you want to clear all planned classes for this semester?"); //confirmation prompt
+	if(c==true){
+		$.ajax({
+			type: "POST",
+			url: "clearSemester.php?year="+year+"&semester="+semester,
+			data:{
+				year : year, 
+				semester : semester,
+			},
+			success: function (result) {
+			}//end success
+		});//end ajax
+	}
+}
+	
+function clearPlan($token, $studentId) { //function called by clear button at top of plan. clears all classes from plan.
 	var c = confirm("Are you sure you want to clear all planned classes?"); //confirmation prompt
 	if(c==true){
 		$.ajax({
+			type: "POST",
 			url: "clearPlan.php",
 			success: function (result) {
-				window.location.reload();
-				return result;
 			}//end success
 		});//end ajax
 		}
-	}//end function getCurrentState
+	}
 
 function initState() {
 
@@ -608,6 +633,92 @@ function initState() {
 
 }//end function
 
+function isInArray(value, array) {
+    return array.indexOf(value) > -1;
+}
+
+function filterState() {
+//This currently will filter both the requirement and working side of the code. If the class only decides to do the req side we can eliminate stillRequiredList code. - SPG
+
+   var chosen= document.getElementById("select");
+//   var selectNumber = chosen.value;
+   var selectNumber = []; 
+
+    for (var i=0; i<chosen.length; i++) {
+        if (chosen[i].checked) {
+            selectNumber.push(chosen[i].value);
+        }
+    }
+
+//If All is selected then the number is 0 which just sets all children to block. This is also the default setting. - SPG
+    if(selectNumber == 0){
+        $('#currentState').children('div').each(function(){
+            var innerDivId = $(this).attr('id');
+            var currReqBox = document.getElementById(innerDivId)
+            currReqBox.style.display = "block";
+        });
+        $('#stillRequiredList').children('div').each(function(){
+            var innerDivId = $(this).attr('id');
+            var currReqBox = document.getElementById(innerDivId)
+            currReqBox.style.display = "block";
+        });
+        $('#filterNotify').children('div').each(function() {
+           var innerDivId = $(this).attr('id');
+           var currNotify = document.getElementById(innerDivId)
+           currNotify.style.display = "block";
+        });
+        return;
+    }
+
+//    console.log(selectNumber);
+for (var i=0; i<selectNumber.length; i++) {
+    $('#currentState').children('div').each(function () {
+        var innerDivId = $(this).attr('id');
+//        console.log(innerDivId);
+
+        var currReqBox = document.getElementById(innerDivId);
+        var currCat = currReqBox.getAttribute('category');
+
+        console.log(currCat);
+//        if (currCat == selectNumber[i] ) {
+        if (isInArray(currCat,selectNumber)) {
+            currReqBox.style.display = "block";
+//            console.log("in the if statement with val of " + value);
+//            console.log(currReqBox.category);
+        } else {
+            currReqBox.style.display = "none";
+        }
+    });
+    $('#stillRequiredList').children('div').each(function () {
+        var innerDivId = $(this).attr('id');
+//        console.log(innerDivId);
+
+        var currReqBox = document.getElementById(innerDivId);
+        var currCat = currReqBox.getAttribute('category');
+
+        console.log(currCat);
+//        if (currCat == selectNumber[i]) {
+        if (isInArray(currCat,selectNumber)) {
+            currReqBox.style.display = "block";
+        } else {
+            currReqBox.style.display = "none";
+        }
+    });
+    $('#filterNotify').children('div').each(function () {
+        var innerDivId = $(this).attr('id');
+
+        var currNotify = document.getElementById(innerDivId);
+        var currCat = currNotify.getAttribute('title');
+
+        if (isInArray(currCat,selectNumber)) {
+            currNotify.style.display = "block";
+        } else {
+            currNotify.style.display = "none";
+        }
+    });
+}
+
+} // end of filterState()
 
 
 
@@ -661,11 +772,15 @@ function initSemesterStart() {
         var headerStr = getSemesterName(sem) + " " + year;
         $(newEl).append("<header class='semester_name'>" + headerStr + "</header>");
 
-
-
+		var innerDivId = "p" + year + sem;
         var innerDivStr = '<div class="target semester_plan"></div>';
         var innerDiv = $(innerDivStr);
-        var innerDivId = "p" + year + sem;
+		var innerBtnId = "c" + year + sem;
+		var innerBtnStr = '<button data-show="on" onclick="clearSemester(this.id)"> Clear Semester</button>';
+		var innerBtn = $(innerBtnStr);
+        
+		$(innerBtn).attr('id', innerBtnId);
+		$(newEl).append(innerBtn);
         $(innerDiv).attr('id', innerDivId);
         $(innerDiv).data("currentHours", 0);
         $(newEl).append(innerDiv);
@@ -725,6 +840,8 @@ function handleDropEventOnRequired(event, ui) {
 //if($("#" + name).length == 0) {
     //it doesn't exist
 //}
+	verticalScaling();
+	
     var sourceId = ui.draggable.attr('id');
     if (sourceId.substr(0, 1) == "w") {
 
@@ -752,6 +869,8 @@ function handleDropEventOnRequired(event, ui) {
 //TODO - redo this whole method to undo the plan
 //redo this one, on drop on plan adjust semester hours, get from semester/year TODO
 function handleDropEventOnWorking(event, ui) {
+	
+	verticalScaling();
 
     var targId = $(this).attr('id');
 
@@ -889,9 +1008,12 @@ function handleDropEventOnWorking(event, ui) {
 
 //TODO add function for changing drop-down selection on plan
 function handleDropEventOnPlan(event, ui) {
+	
+	verticalScaling();
 
     var targId = $(this).attr('id');
 
+	
     //if prereqs met and course offered, let it drop
     //update planned course record
     //if (true) {
@@ -1094,7 +1216,7 @@ function handleDropEventOnPlan(event, ui) {
             },
             success: function (result) {
                 //alert("success");
-                alert(result);
+                //alert(result);
                 /*
                  var req=JSON.parse(result); //reqs is array of requirement objects
                  //each req object also has a list of course option objects and list of courses taken objects
@@ -1104,6 +1226,7 @@ function handleDropEventOnPlan(event, ui) {
                  processReqUpdate(req);
                  //}
                  */
+				 verticalScaling();
 
             }//end success
         });//end ajax
