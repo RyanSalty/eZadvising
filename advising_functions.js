@@ -531,7 +531,9 @@ function showHideSemesters(){
                 var b = confirm("Are you sure you wish to hide "+getSemesterName(1) +" "+ year+" with already planned courses?");
                 if (b == true) {
                     document.getElementById(id).style.display = "none";
-                    $('#required_table').append("Courses Hidden!");
+                    var hiddenCourse = "<div id ='hide' class = 'error'>Courses Hidden!</div>";
+
+                    $('#stillRequiredList').append(hiddenCourse);
                 }
             }
             //if so, change to remove current class and ass req_hidden class
@@ -554,7 +556,7 @@ function showHideSemesters(){
                         //var img = document.createElement("img");
                         //img.src = "http://www.google.com/imgres?imgurl=http://studio665.com/wp-content/uploads/2013/11/exclamation-point-sign-red-triangle_2.png&imgrefurl=http://studio665.com/salsa-class-cancelled/&h=256&w=256&tbnid=JPnZgevurUm63M:&docid=-4gwbmEmRQLuwM&ei=MwpCVtGfPMT0mAGZ6pOACg&tbm=isch&ved=0CC0QMygRMBFqFQoTCJGFv4GThskCFUQ6JgodGfUEoA";
                         var hiddenCourse = "<div id ='hide' class = 'error'>Courses Hidden!</div>";
-                        $('#required_table').append(hiddenCourse);
+                        $('#stillRequiredList').append(hiddenCourse);
                     }
                 }
                 else {
