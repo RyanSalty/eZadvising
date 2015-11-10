@@ -71,6 +71,8 @@ $_SESSION['token'] = "ABC";
             <tr>
                 <td>
                     <button data-show="on" onclick="showHideSummers()"> Show/Hide Summers</button>
+                    <button data-show="on" onclick="showHideSemesters()"> Hide Semesters</button>
+                    <button data-show="on" onclick="semShown(semesters.value)"> Show All</button>
                 </td>
                 <td>
                     <select name ="semesters" id = "semesters" onchange="semShown(semesters.value)">
