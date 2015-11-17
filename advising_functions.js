@@ -1,5 +1,5 @@
 function getCurrentState($token, $studentId) {
-    //alert("in getCurrentState");
+alert("in getCurrentState");
     $.ajax({
         url: "getSomething.php",
         success: function (result) {
@@ -414,6 +414,168 @@ $(init);
 function showHideSummers() {
     $(".semester_block.minor").toggle();
 }
+//#TODO change logic  teal for hidden #odffd9
+//call init state, show all, then based on dmv hide whats needed 
+function semShown(dmv){
+ var now = new Date();
+ var year = now.getFullYear();
+ var lastYear = year + 5;
+ var end2Year = year + 2;
+ var end4Year = year + 4;
+ alert('in semShown function ' + dmv + 'passed to function.');
+    document.getElementById('hide').style.display = "none";
+    switch (dmv){
+    //decrease to 2 years
+        case "2":
+        alert("decrese to 2 years.");
+    //hide from 3-5 year
+            for(var j = 0; j < 3; j++){
+                for(var i = 6; i > 1; i--){
+                    var id = "s" + lastYear + i;
+
+                        //  alert("id created: " + id);
+                    document.getElementById(id).style.display = "none";
+                }
+                lastYear--;
+                var id2 = "s" + lastYear + "1";
+                //alert("id2 created:" + id2);
+                document.getElementById(id2).style.display = "none";
+            }
+        break;
+
+
+    //increase to 5 years
+        case "5":
+        alert("increase to 5 years.");
+            id = "s" + end2Year + "1";
+            document.getElementById(id).style.display = "block";
+          //  document.getElementById(id2).style.checked(false);
+            for(var k = 0; k < 4; k++){
+                for(var l = 6; l > 0 ; l--){
+                id = "s" + end2Year + l;
+                    var id2 = "cs" + lastYear + i;
+                //alert(id);
+                document.getElementById(id).style.display = "block";
+                   // document.getElementById(id2).style.checked(false);
+
+                }
+                end2Year++;
+            }
+        break;
+
+        case "4" :
+            alert("back to default 4");
+           for(var n = end4Year; n > year; n--){
+               //alert("outside: s"+n + "1");
+            for(var m = 2; m < 7; m++){
+                id = "s" + end4Year + m;
+                id2 = "cs" + end4Year + m;
+                //alert(id);
+                document.getElementById(id).style.display = "block";
+                //document.getElementById(id2).style.checked(false);
+
+            }
+               end4Year--;
+               id = "s"+end4Year + "1";
+               //alert(id);
+               document.getElementById(id).style.display = "block";
+             //  document.getElementById(id2).style.checked(false);
+
+           }
+            end4Year = year + 4;
+            for(var p = 0; p < 1; p++){
+                id = "s" + end4Year + "1";
+                //alert(id);
+                document.getElementById(id).style.display = "none";
+                end4Year ++;
+              for(var q = 2; q < 7; q++){
+                  id = "s" + end4Year + q;
+                  //alert(id);
+                  document.getElementById(id).style.display = "none";
+
+              }
+            }
+
+   }
+}
+
+function showHideSemesters(){
+  //#TODO how to make hidden semesters come back. would have to be all at once.
+    alert("clicked");
+    //get date of first planned for student or current semester and show whichever
+// is earlier
+    var now = new Date();
+    var nowYear = now.getFullYear();
+//console.dir("year:"+nowYear);
+    var nowMonth = now.getMonth();
+    var startSem;
+    var startYear;
+
+    if (nowMonth >= 1 && nowMonth <= 5) //spring
+    {
+        startSem = 2;
+        startYear = nowYear;
+    }
+    else if (nowMonth >= 6 && nowMonth <= 12) //fall
+    {
+        startSem = 1;
+        startYear = nowYear;
+    }
+    else {
+        startSem = 2;
+        startYear = nowYear;
+    }
+    //var sem = startSem;
+    var year = startYear;
+
+    //alert("clicked first semester is " + startYear + startSem);
+    //loop through all boxes, if check, change display.
+    for(var i = 0; i < 5; i++) {
+       // alert("cs" + year + "1" + " " + document.getElementById("cs" + year + "1").checked);
+        if (document.getElementById("cs" + year + "1").checked){
+            var id = "s" + year + "1";
+            var id2 = "p" + year + "1";
+            //check to see if courses present on hidden semester,
+            //alert("DIV S"+ document.getElementById(id).hasChildNodes());
+            if (document.getElementById(id2).hasChildNodes()) {
+                var b = confirm("Are you sure you wish to hide "+getSemesterName(1) +" "+ year+" with already planned courses?");
+                if (b == true) {
+                    document.getElementById(id).style.display = "none";
+                    var hiddenCourse = "<div id ='hide' class = 'error'>Courses Hidden!</div>";
+
+                    $('#stillRequiredList').append(hiddenCourse);
+                }
+            }
+            //if so, change to remove current class and ass req_hidden class
+           else {
+                document.getElementById(id).style.display = "none";
+            }
+        }
+    }
+        year++;
+        for (var j = 2; j < 7; j++) {
+         //   alert("cs" + year + j + " " + document.getElementById("cs" + year + j).checked);
+            if (document.getElementById("cs" + year + j).checked) {
+                var id3 = "s" + year + j;
+                var id4 = "p" + year + j;
+                //alert("DIV S"+ document.getElementById(id).hasChildNodes());
+                if (document.getElementById(id4).hasChildNodes()) {
+                    var c = confirm("Are you sure you wish to hide "+getSemesterName(j) + " "+year+" with already planned courses?");
+                    if (c == true) {
+                        document.getElementById(id3).style.display = "none";
+                        //var img = document.createElement("img");
+                        //img.src = "http://www.google.com/imgres?imgurl=http://studio665.com/wp-content/uploads/2013/11/exclamation-point-sign-red-triangle_2.png&imgrefurl=http://studio665.com/salsa-class-cancelled/&h=256&w=256&tbnid=JPnZgevurUm63M:&docid=-4gwbmEmRQLuwM&ei=MwpCVtGfPMT0mAGZ6pOACg&tbm=isch&ved=0CC0QMygRMBFqFQoTCJGFv4GThskCFUQ6JgodGfUEoA";
+                        var hiddenCourse = "<div id ='hide' class = 'error'>Courses Hidden!</div>";
+                        $('#stillRequiredList').append(hiddenCourse);
+                    }
+                }
+                else {
+                    document.getElementById(id3).style.display = "none";
+                }
+            }
+        }
+
+}
 
 
 function initState() {
@@ -570,7 +732,8 @@ function initSemesterStart() {
     var year = startYear;
     var sem = startSem;
 
-    for (i = 0; i < 24; i++) {
+
+    for (i = 0; i < 30; i++) {
 
         var newElStr = '<div class="semester_block"></div>';
         var newEl = $(newElStr);
@@ -585,7 +748,9 @@ function initSemesterStart() {
         $(newEl).attr('id', newElId);
         console.dir($(newEl).attr('id'));
         var headerStr = getSemesterName(sem) + " " + year;
-        $(newEl).append("<header class='semester_name'>" + headerStr + "</header>");
+        $(newEl).append("<header class='semester_name'>" + headerStr + "<input type='checkbox' name='selected' id = c"+ newElId+"></header>");
+
+
 
         var innerDivStr = '<div class="target semester_plan"></div>';
         var innerDiv = $(innerDivStr);
@@ -597,6 +762,10 @@ function initSemesterStart() {
 
 
         $('#thePlan').append(newEl);
+
+        if(i >= 24){
+            document.getElementById(newElId).style.display = "none";
+        }
 
         //add the semester to the semList drop-down on right
         var optId = "d" + year + sem;
@@ -1031,6 +1200,11 @@ function handleDropEventOnPlan(event, ui) {
 
 }//end function
 
+function handleHiddenClassesOnPlan() {
+    //this function will be used to tell the program to change
+    // css of courses on left, will be called by function that hides
+    //individual semesters.
+}
 
 /********* experimental for automating movement **********/
 function trigger_drop() {
