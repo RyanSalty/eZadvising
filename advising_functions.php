@@ -158,6 +158,37 @@ function validateToken($studentId, $token)
     return true;
 }
 
+function clearPlan($token, $studentId)
+{
+    try {
+        if (!validateToken($token, $studentId)) {
+            return 403;
+        }
+
+        //  if(empty($studentId)) return 404;
+
+        $conn = new PDO(DBCONNECTSTRING, DBUSER, DBPASSWORD);
+        $sql = 'DELETE FROM course_records WHERE studentId=:studentId';
+        //$sql = $sql. ' VALUES (null, :studentId, :courseId, null, :semester, :year, :reqId, 2, :proposedReqId)';
+        $stmt = $conn->prepare($sql);
+
+        $stmt->bindParam(':studentId', $studentId);
+
+        $success = $stmt->execute();
+        $inserted = $success ? "yes" : "no";
+        echo "<h4>success:" . $inserted . "</h4>";
+
+
+    }//end try
+    catch (PDOException $e) {
+        //echo $sql . "<br>" . $e->getMessage();
+        return 500;
+    }
+
+    $conn = null;
+
+}
+
 //UPDATED DONE USED
 function getUpdatedRequirementForStudent($token, $studentId, $reqId, $programId, $year)
 {
