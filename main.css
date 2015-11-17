@@ -299,6 +299,14 @@ div.req_working {
     background-color: #008080; /* teal */
 }
 
+/*for the classes that are present on the now hidden semesters
+only needed to change on the left side. Still not completely sure on colors*/
+div.req_hidden {
+    color: white;
+    background-color: black;
+    border-color: #008080; /*teal*/
+}
+
 /*******************/
 
 /*********  Styling for  requirements boxes ON PLAN **********/
@@ -310,6 +318,11 @@ div.req_on_plan {
     /* to fill up row-1 course per row */
     display: block;
 
+}
+
+div.error {
+    color: white;
+    text: red;
 }
 
 /*******************/
