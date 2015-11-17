@@ -2,7 +2,7 @@
 
 
 define("DBUSER", "root");
-define("DBPASSWORD", "");
+define("DBPASSWORD", "password");
 define("DBSERVER", "localhost");
 define("DBNAME", "ezadvising");
 
