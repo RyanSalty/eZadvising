@@ -1,8 +1,8 @@
 <?php
 
 
-define("DBUSER", "advising");
-define("DBPASSWORD", "adv123");
+define("DBUSER", "root");
+define("DBPASSWORD", "");
 define("DBSERVER", "localhost");
 define("DBNAME", "ezadvising");
 
