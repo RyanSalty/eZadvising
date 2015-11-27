@@ -40,7 +40,7 @@ $_SESSION['token'] = "ABC";
 -->
         <!-- Updated from dropdown to a checkbox for Sprint 2 SPG 11/10/2015 -->
         <form id="select" action="#" method="post">
-            <input type="checkbox" id="checkbox1_master" name="check_list[]" value="0" onchange="togglecheckboxes(this,'cb1group')" checked><label>Toggle All</label><br/>
+            <input type="checkbox" id="checkbox1_master" name="check_list[]" value="0" onchange="toggleCheckBoxes(this,'cb1group')" checked><label>Toggle All</label><br/>
             <input type="checkbox" id="cb1_1" name="check_list[]" class="cb1group" value="1" checked><label>Core</label><br/>
             <input type="checkbox" id="cb1_2" name="check_list[]" class="cb1group" value="2" checked><label>Foundation</label><br/>
             <input type="checkbox" id="cd1_3" name="check_list[]" class="cb1group" value="3" checked><label>Major</label><br/>

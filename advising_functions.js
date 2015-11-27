@@ -617,7 +617,7 @@ function isInArray(value, array) {
     return array.indexOf(value) > -1;
 }
 
-function togglecheckboxes(master,group){
+function toggleCheckBoxes(master,group){
     var boxArray = document.getElementsByClassName(group);
     for(var i=0; i<boxArray.length; i++){
         var checkbox = document.getElementById(boxArray[i].id);
