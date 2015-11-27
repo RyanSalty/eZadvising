@@ -617,6 +617,32 @@ function isInArray(value, array) {
     return array.indexOf(value) > -1;
 }
 
+function togglecheckboxes(master,group){
+    var boxArray = document.getElementsByClassName(group);
+    for(var i=0; i<boxArray.length; i++){
+        var checkbox = document.getElementById(boxArray[i].id);
+        checkbox.checked = master.checked;
+    }
+}
+
+function filterNotify(){
+    var inputElems = document.getElementsByName("check_list[]"),
+        notifyDiv = document.getElementById("filterNotify"),
+        count = 0,
+        totalBoxes = 0;
+    for (var i=0; i<inputElems.length; i++) {
+        if (inputElems[i].type === "checkbox" && inputElems[i].checked === true) {
+            count++;
+        }
+        totalBoxes++;
+    }
+    if(count == 0 || count == totalBoxes){
+        notifyDiv.style.display = "none";
+    }else{
+        notifyDiv.style.display = "block";
+    }
+}
+
 function filterState() {
 //This currently will filter both the requirement and working side of the code. If the class only decides to do the req side we can eliminate stillRequiredList code. - SPG
 
@@ -641,11 +667,6 @@ function filterState() {
             var innerDivId = $(this).attr('id');
             var currReqBox = document.getElementById(innerDivId)
             currReqBox.style.display = "block";
-        });
-        $('#filterNotify').children('div').each(function() {
-           var innerDivId = $(this).attr('id');
-           var currNotify = document.getElementById(innerDivId)
-           currNotify.style.display = "block";
         });
         return;
     }
@@ -682,18 +703,6 @@ for (var i=0; i<selectNumber.length; i++) {
             currReqBox.style.display = "block";
         } else {
             currReqBox.style.display = "none";
-        }
-    });
-    $('#filterNotify').children('div').each(function () {
-        var innerDivId = $(this).attr('id');
-
-        var currNotify = document.getElementById(innerDivId);
-        var currCat = currNotify.getAttribute('title');
-
-        if (isInArray(currCat,selectNumber)) {
-            currNotify.style.display = "block";
-        } else {
-            currNotify.style.display = "none";
         }
     });
 }
