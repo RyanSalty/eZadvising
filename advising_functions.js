@@ -343,6 +343,7 @@ function processReqUpdate(req, update) {
 
 }
 
+
 function getSemesterName(code) {
     //keep in sync with semester_code table
     // but don't need to query database for this for performance reasons
@@ -568,6 +569,100 @@ function showHideSemesters(){
 }
 
 
+function verticalScaling(){
+	
+	var classTotal;
+	var year = 2016;
+	var sem = 1;
+	
+	classTotal = $('#p20151 div.req_box').length;
+	for(i=0;i<11;i++){
+		var pBoxId = "p" + year + sem;
+		
+		if($('#' + pBoxId + ' div.req_box').length > classTotal){
+			classTotal = $('#' + pBoxId + ' div.req_box').length;
+		}
+		sem++;
+			
+		if(sem >6){
+			sem = 2;
+			year++;
+		}
+	}
+	if(classTotal > 5){
+		var pHeight = classTotal * 5;
+		var sHeight = classTotal * 5.75;
+		var semester_plan = document.getElementById("s20151");
+		semester_plan.style.height = sHeight + "rem";
+		
+		var semester_plan2 = document.getElementById("p20151");
+		semester_plan2.style.height = pHeight + "rem";
+		
+		year = 2016;
+		sem = 1;
+		for(i=0;i<11;i++){
+		var sBoxId = "s" + year + sem;
+		semester_plan = document.getElementById(sBoxId);
+		semester_plan.style.height =  sHeight + "rem";
+		
+		var boxId = "p" + year + sem;
+		semester_plan2 = document.getElementById(boxId);
+		semester_plan2.style.height = pHeight + "rem";
+		
+		sem++;
+		
+		if(sem >6){
+			sem = 2;
+			year++;
+		}
+		}
+
+	}
+	else{
+		var semester_plan = document.getElementById("s20151");
+		semester_plan.style.height = "26rem";
+		
+		var semester_plan2 = document.getElementById("p20151");
+		semester_plan2.style.height = "22rem";
+		
+		year = 2016;
+		sem = 1;
+		for(i=0;i<11;i++){
+			var sBoxId = "s" + year + sem;
+			semester_plan = document.getElementById(sBoxId);
+			semester_plan.style.height =  "26rem";
+			
+			var boxId = "p" + year + sem;
+			semester_plan2 = document.getElementById(boxId);
+			semester_plan2.style.height = "22rem";
+			
+			sem++;
+			
+			if(sem >6){
+				sem = 2;
+				year++;
+			}
+		}
+		
+	}
+
+}
+
+function clearPlan($token, $studentId) {
+    //alert("in getCurrentState");
+
+	var c = confirm("Are you sure you want to clear all planned classes?"); //confirmation prompt
+	if(c==true){
+		$.ajax({
+			url: "clearPlan.php",
+			success: function (result) {
+				window.location.reload();
+				return result;
+			}//end success
+		});//end ajax
+		}
+	}//end function getCurrentState
+
 function initState() {
 
 //get user id from session or redirect to login (wiht message to come back)
@@ -738,6 +833,8 @@ function handleDropEventOnRequired(event, ui) {
         $(sel).draggable('option', 'revert', true);
         $(ui.draggable).remove();
     }
+	
+	verticalScaling();
 
 
 }
@@ -874,6 +971,9 @@ function handleDropEventOnWorking(event, ui) {
         console.log("in else");
     }//end else not original move
     //add code for drop-down change
+	
+	
+	verticalScaling();
 
 }//end function
 
@@ -959,6 +1059,8 @@ function handleDropEventOnPlan(event, ui) {
 
 
         console.dir("hours: " + hours);
+		
+
 
         //insert into database
         $.ajax({
@@ -1008,6 +1110,8 @@ function handleDropEventOnPlan(event, ui) {
 
         //style the copy of requirement still left on working side
         //
+		
+		
 
     }//end if original move
     else if (sourceId.substr(0, 1) == "p") //move from one semester to another
@@ -1104,6 +1208,9 @@ function handleDropEventOnPlan(event, ui) {
         //console.log("in else");
     }//end else not original move
     //add code for drop-down change
+	
+	
+	verticalScaling();
 
 }//end function
 
