@@ -328,7 +328,7 @@ div.semester_block header.semester_name{
 
 div.semester_block {
     background-color: white;
-    height: 31.5rem;
+    height: 33.5rem;
     width: 10.25rem;
     border-style: dotted;
     border-width: 1px;
@@ -349,7 +349,7 @@ div.semester_block footer {
 
 /* actual droppable part */
 div.semester_plan {
-    height: 26.75rem;
+    height: 28.75rem;
     width: 10rem;
 
 }

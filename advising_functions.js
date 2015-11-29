@@ -537,7 +537,7 @@ function showHideSemesters(){
                     document.getElementById(id).style.display = "none";
                     var hiddenCourse = "<div id ='hide' class = 'error'>Courses Hidden!</div>";
 
-                    $('#stillRequiredList').append(hiddenCourse);
+                    $('#eligibleSwitch').append(hiddenCourse);
                 }
             }
             //if so, change to remove current class and ass req_hidden class
@@ -560,7 +560,7 @@ function showHideSemesters(){
                         //var img = document.createElement("img");
                         //img.src = "http://www.google.com/imgres?imgurl=http://studio665.com/wp-content/uploads/2013/11/exclamation-point-sign-red-triangle_2.png&imgrefurl=http://studio665.com/salsa-class-cancelled/&h=256&w=256&tbnid=JPnZgevurUm63M:&docid=-4gwbmEmRQLuwM&ei=MwpCVtGfPMT0mAGZ6pOACg&tbm=isch&ved=0CC0QMygRMBFqFQoTCJGFv4GThskCFUQ6JgodGfUEoA";
                         var hiddenCourse = "<div id ='hide' class = 'error'>Courses Hidden!</div>";
-                        $('#stillRequiredList').append(hiddenCourse);
+                        $('#eligibleSwitch').append(hiddenCourse);
                     }
                 }
                 else {
@@ -575,10 +575,11 @@ function showHideSemesters(){
 function verticalScaling(){
 	
 	var classTotal;
-	var year = 2016;
+	var now = new Date();
+	var year = now.getFullYear();;
 	var sem = 1;
 	
-	classTotal = $('#p20151 div.req_box').length;
+	classTotal = $('#p'+ year +'1 div.req_box').length;
 	for(i=0;i<24;i++){
 		var pBoxId = "p" + year + sem;
 		
@@ -592,16 +593,17 @@ function verticalScaling(){
 			year++;
 		}
 	}
-	if(classTotal >= 5){
-		var pHeight = classTotal * 6;
-		var sHeight = classTotal * 6.50;
-		var semester_plan = document.getElementById("s20151");
+	if(classTotal > 5){
+		year = now.getFullYear();
+		var pHeight = (classTotal + 2) * 4.15;
+		var sHeight = (classTotal + 2) * 4.75;
+		var semester_plan = document.getElementById("s"+ year + "1");
 		semester_plan.style.height = sHeight + "rem";
 		
-		var semester_plan2 = document.getElementById("p20151");
+		var semester_plan2 = document.getElementById("p"+year+"1");
 		semester_plan2.style.height = pHeight + "rem";
 		
-		year = 2016;
+		year++;
 		sem = 1;
 		for(i=0;i<24;i++){
 		var sBoxId = "s" + year + sem;
@@ -622,22 +624,22 @@ function verticalScaling(){
 
 	}
 	else{
-		var semester_plan = document.getElementById("s20151");
-		semester_plan.style.height = "32.5rem";
+		var semester_plan = document.getElementById("s"+year+"1");
+		semester_plan.style.height = "33.5rem";
 		
-		var semester_plan2 = document.getElementById("p20151");
-		semester_plan2.style.height = "29.75rem";
+		var semester_plan2 = document.getElementById("p"+year+"1");
+		semester_plan2.style.height = "28.75rem";
 		
-		year = 2016;
+		year = now.getFullYear() + 1;
 		sem = 1;
 		for(i=0;i<24;i++){
 			var sBoxId = "s" + year + sem;
 			semester_plan = document.getElementById(sBoxId);
-			semester_plan.style.height =  "32.5rem";
+			semester_plan.style.height =  "33.5rem";
 			
 			var boxId = "p" + year + sem;
 			semester_plan2 = document.getElementById(boxId);
-			semester_plan2.style.height = "29.75rem";
+			semester_plan2.style.height = "28.75rem";
 			
 			sem++;
 			
@@ -653,13 +655,10 @@ function verticalScaling(){
 
 function clearSemester(innerDivId){ //function called by button in each semester block div. clears all classes from plan in that semester.
 	//TODO optimize code
-	alert("in clearsemester");
 	//var innerDivId = $(this).attr("id");
 	var str = innerDivId.split("");
 	var year = str[1] + str[2] + str[3] + str[4];
 	var semester = str[5];
-	alert(year);
-	alert(semester);
 	
 	var c = confirm("Are you sure you want to clear all planned classes for this semester?"); //confirmation prompt
 	if(c==true){
@@ -671,6 +670,7 @@ function clearSemester(innerDivId){ //function called by button in each semester
 				semester : semester,
 			},
 			success: function (result) {
+				location.reload(); 
 			}//end success
 		});//end ajax
 	}
@@ -683,6 +683,7 @@ function clearPlan($token, $studentId) { //function called by clear button at to
 			type: "POST",
 			url: "clearPlan.php",
 			success: function (result) {
+				location.reload(); 
 			}//end success
 		});//end ajax
 		}
