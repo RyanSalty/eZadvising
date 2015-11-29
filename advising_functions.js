@@ -21,15 +21,12 @@ function processReqUpdate(req, update) {
 
     //build base classes
     var classStr = "req_box";
-    //TODO: add classes for category
+
 //    var category = req.category;
     // From the database
     // 1 = Core
     // 2 = Foundation
     // 3 = Major
-    /* if(req.category==2) classStr+=" foundation";
-     else if(req.category==3) classStr+=" major";
-     */
 
     //create the MAIN requirement box element
     //group name is the requirement name (now comes from program_requirements.title)
@@ -543,7 +540,7 @@ function showHideSemesters(){
                     document.getElementById(id).style.display = "none";
                     var hiddenCourse = "<div id ='hide' class = 'error'>Courses Hidden!</div>";
 
-                    $('#stillRequiredList').append(hiddenCourse);
+                    $('#eligibleSwitch').append(hiddenCourse);
                 }
             }
             //if so, change to remove current class and ass req_hidden class
@@ -566,7 +563,7 @@ function showHideSemesters(){
                         //var img = document.createElement("img");
                         //img.src = "http://www.google.com/imgres?imgurl=http://studio665.com/wp-content/uploads/2013/11/exclamation-point-sign-red-triangle_2.png&imgrefurl=http://studio665.com/salsa-class-cancelled/&h=256&w=256&tbnid=JPnZgevurUm63M:&docid=-4gwbmEmRQLuwM&ei=MwpCVtGfPMT0mAGZ6pOACg&tbm=isch&ved=0CC0QMygRMBFqFQoTCJGFv4GThskCFUQ6JgodGfUEoA";
                         var hiddenCourse = "<div id ='hide' class = 'error'>Courses Hidden!</div>";
-                        $('#stillRequiredList').append(hiddenCourse);
+                        $('#eligibleSwitch').append(hiddenCourse);
                     }
                 }
                 else {
@@ -577,6 +574,123 @@ function showHideSemesters(){
 
 }
 
+
+function verticalScaling(){
+	
+	var classTotal;
+	var now = new Date();
+	var year = now.getFullYear();
+	var sem = 1;
+
+	classTotal = $('#p'+ year +'1 div.req_box').length;
+	for(i=0;i<24;i++){
+		var pBoxId = "p" + year + sem;
+
+		if($('#' + pBoxId + ' div.req_box').length > classTotal){
+			classTotal = $('#' + pBoxId + ' div.req_box').length;
+		}
+		sem++;
+
+		if(sem >6){
+			sem = 1;
+			year++;
+		}
+	}
+	if(classTotal > 5){
+		year = now.getFullYear();
+		var pHeight = (classTotal + 2) * 4.15;
+		var sHeight = (classTotal + 2) * 4.75;
+		var semester_plan = document.getElementById("s"+ year + "1");
+		semester_plan.style.height = sHeight + "rem";
+
+		var semester_plan2 = document.getElementById("p"+year+"1");
+		semester_plan2.style.height = pHeight + "rem";
+
+		year++;
+		sem = 1;
+		for(i=0;i<24;i++){
+		var sBoxId = "s" + year + sem;
+		semester_plan = document.getElementById(sBoxId);
+		semester_plan.style.height =  sHeight + "rem";
+
+		var boxId = "p" + year + sem;
+		semester_plan2 = document.getElementById(boxId);
+		semester_plan2.style.height = pHeight + "rem";
+
+		sem++;
+
+		if(sem >6){
+			sem = 1;
+			year++;
+		}
+		}
+
+	}
+	else{
+		year = now.getFullYear();
+		var semester_plan = document.getElementById("s"+year+"1");
+		semester_plan.style.height = "31.5rem";
+
+		var semester_plan2 = document.getElementById("p"+year+"1");
+		semester_plan2.style.height = "26.75rem";
+
+		year = now.getFullYear() + 1;
+		sem = 1;
+		for(i=0;i<24;i++){
+			var sBoxId = "s" + year + sem;
+			semester_plan = document.getElementById(sBoxId);
+			semester_plan.style.height =  "31.5rem";
+
+			var boxId = "p" + year + sem;
+			semester_plan2 = document.getElementById(boxId);
+			semester_plan2.style.height = "26.75rem";
+
+			sem++;
+
+			if(sem >6){
+				sem = 1;
+				year++;
+			}
+		}
+
+	}
+
+}
+
+function clearSemester(innerDivId){ //function called by button in each semester block div. clears all classes from plan in that semester.
+	//TODO optimize code
+	//var innerDivId = $(this).attr("id");
+	var str = innerDivId.split("");
+	var year = str[1] + str[2] + str[3] + str[4];
+	var semester = str[5];
+	var c = confirm("Are you sure you want to clear all planned classes for this semester?"); //confirmation prompt
+	if(c==true){
+		$.ajax({
+			type: "POST",
+			url: "clearSemester.php?year="+year+"&semester="+semester,
+			data:{
+				year : year,
+				semester : semester,
+			},
+			success: function (result) {
+				location.reload();
+			}//end success
+		});//end ajax
+	}
+}
+
+function clearPlan($token, $studentId) { //function called by clear button at top of plan. clears all classes from plan.
+	var c = confirm("Are you sure you want to clear all planned classes?"); //confirmation prompt
+	if(c==true){
+		$.ajax({
+			type: "POST",
+			url: "clearPlan.php",
+			success: function (result) {
+				location.reload();
+			}//end success
+		});//end ajax
+		}
+	}
 
 function initState() {
 
@@ -757,13 +871,15 @@ function initSemesterStart() {
         $(newEl).attr('id', newElId);
         console.dir($(newEl).attr('id'));
         var headerStr = getSemesterName(sem) + " " + year;
-        $(newEl).append("<header class='semester_name'>" + headerStr + "<input type='checkbox' name='selected' id = c"+ newElId+"></header>");
+		var innerBtnId = "c" + year + sem;
+		//var innerBtn = $(innerBtnStr);
+        $(newEl).append("<header class='semester_name'>" + headerStr + '<button data-show="on" onclick="clearSemester('+ "\'" + innerBtnId + "\'" + ')"> Clear Semester</button>' + "<input type='checkbox' name='selected' id = c"+ newElId+"></header>");
 
 
-
+		var innerDivId = "p" + year + sem;
         var innerDivStr = '<div class="target semester_plan"></div>';
         var innerDiv = $(innerDivStr);
-        var innerDivId = "p" + year + sem;
+
         $(innerDiv).attr('id', innerDivId);
         $(innerDiv).data("currentHours", 0);
         $(newEl).append(innerDiv);
@@ -823,6 +939,8 @@ function handleDropEventOnRequired(event, ui) {
 //if($("#" + name).length == 0) {
     //it doesn't exist
 //}
+	verticalScaling();
+
     var sourceId = ui.draggable.attr('id');
     if (sourceId.substr(0, 1) == "w") {
 
@@ -840,6 +958,8 @@ function handleDropEventOnRequired(event, ui) {
         $(sel).draggable('option', 'revert', true);
         $(ui.draggable).remove();
     }
+	
+	verticalScaling();
 
 
 }
@@ -848,6 +968,8 @@ function handleDropEventOnRequired(event, ui) {
 //TODO - redo this whole method to undo the plan
 //redo this one, on drop on plan adjust semester hours, get from semester/year TODO
 function handleDropEventOnWorking(event, ui) {
+
+	verticalScaling();
 
     var targId = $(this).attr('id');
 
@@ -976,12 +1098,17 @@ function handleDropEventOnWorking(event, ui) {
         console.log("in else");
     }//end else not original move
     //add code for drop-down change
+	
+	
+	verticalScaling();
 
 }//end function
 
 
 //TODO add function for changing drop-down selection on plan
 function handleDropEventOnPlan(event, ui) {
+
+	verticalScaling();
 
     var targId = $(this).attr('id');
 
@@ -1183,7 +1310,7 @@ function handleDropEventOnPlan(event, ui) {
             },
             success: function (result) {
                 //alert("success");
-                alert(result);
+                //alert(result);
                 /*
                  var req=JSON.parse(result); //reqs is array of requirement objects
                  //each req object also has a list of course option objects and list of courses taken objects
@@ -1193,6 +1320,7 @@ function handleDropEventOnPlan(event, ui) {
                  processReqUpdate(req);
                  //}
                  */
+				 verticalScaling();
 
             }//end success
         });//end ajax
@@ -1206,6 +1334,9 @@ function handleDropEventOnPlan(event, ui) {
         //console.log("in else");
     }//end else not original move
     //add code for drop-down change
+	
+	
+	verticalScaling();
 
 }//end function
 

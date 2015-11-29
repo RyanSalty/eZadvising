@@ -59,7 +59,7 @@ $_SESSION['token'] = "ABC";
             <tr>
                 <th>Plan</th>
             </tr>
-
+				
             <tr></tr>
         </table>
 
@@ -72,7 +72,23 @@ $_SESSION['token'] = "ABC";
                     <button data-show="on" onclick="showHideSemesters()"> Hide Semesters</button>
                     <button data-show="on" onclick="semShown(semesters.value)"> Show All</button>
                 </td>
+                <td>
+                    <select name ="semesters" id = "semesters" onchange="semShown(semesters.value)">
+                        <option value="4">4 Years</option>
+                        <option value="2">2 Years</option>
+                        <option value="5">5 Years</option>
+                    </select>
+                </td>
             </tr>
+			
+			<tr>
+				<td>
+					<button data-show="on" onclick="clearPlan();" > Clear Plan</button>
+				</td>
+			</tr>
+	
+
+			
             <!-- <tr> <td><button onclick="unplan()" > Save Plan </button> </td> </tr>
              <tr> <td><button onclick="unplan()" > Revert to Saved Plan </button></td></tr>
              -->
@@ -81,6 +97,7 @@ $_SESSION['token'] = "ABC";
 
     </div>
     <!-- end div main -->
+	
 
     <!-- newlayout </div> --><!-- end div col23 -->
 
@@ -104,8 +121,9 @@ $_SESSION['token'] = "ABC";
             <select id="semList"></select>
         </div>
         <div id="stillRequiredList">
-
+		
         </div>
+		
 
         <!-- end stillRequiredList div -->
 
