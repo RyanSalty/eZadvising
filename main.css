@@ -321,8 +321,8 @@ div.req_on_plan {
 }
 
 div.error {
-    color: white;
-    text: red;
+    color: red;
+    text: Courier;
 }
 
 /*******************/
@@ -345,7 +345,6 @@ div.semester_block {
     float: left;
     margin-right: 5px;
     margin-bottom: 5px;
-
 }
 
 div.semester_block footer {
@@ -359,6 +358,18 @@ div.semester_plan {
     width: 10rem;
 
 }
+
+div.semester_hidden {
+    height: 26rem;
+    width: 10px;
+    background-color: #cd7f32;
+    border: solid;
+    border-width: 1px;
+    border-color: black;
+    float:left;
+    display: none;
+}
+
 
 /* when hovering over droppable */
 /*
