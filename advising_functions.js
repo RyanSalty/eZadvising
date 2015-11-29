@@ -576,7 +576,7 @@ function verticalScaling(){
 	
 	var classTotal;
 	var now = new Date();
-	var year = now.getFullYear();;
+	var year = now.getFullYear();
 	var sem = 1;
 	
 	classTotal = $('#p'+ year +'1 div.req_box').length;
@@ -624,22 +624,23 @@ function verticalScaling(){
 
 	}
 	else{
+		year = now.getFullYear();
 		var semester_plan = document.getElementById("s"+year+"1");
-		semester_plan.style.height = "33.5rem";
+		semester_plan.style.height = "31.5rem";
 		
 		var semester_plan2 = document.getElementById("p"+year+"1");
-		semester_plan2.style.height = "28.75rem";
+		semester_plan2.style.height = "26.75rem";
 		
 		year = now.getFullYear() + 1;
 		sem = 1;
 		for(i=0;i<24;i++){
 			var sBoxId = "s" + year + sem;
 			semester_plan = document.getElementById(sBoxId);
-			semester_plan.style.height =  "33.5rem";
+			semester_plan.style.height =  "31.5rem";
 			
 			var boxId = "p" + year + sem;
 			semester_plan2 = document.getElementById(boxId);
-			semester_plan2.style.height = "28.75rem";
+			semester_plan2.style.height = "26.75rem";
 			
 			sem++;
 			
@@ -659,7 +660,6 @@ function clearSemester(innerDivId){ //function called by button in each semester
 	var str = innerDivId.split("");
 	var year = str[1] + str[2] + str[3] + str[4];
 	var semester = str[5];
-	
 	var c = confirm("Are you sure you want to clear all planned classes for this semester?"); //confirmation prompt
 	if(c==true){
 		$.ajax({
@@ -861,18 +861,15 @@ function initSemesterStart() {
         $(newEl).attr('id', newElId);
         console.dir($(newEl).attr('id'));
         var headerStr = getSemesterName(sem) + " " + year;
-        $(newEl).append("<header class='semester_name'>" + headerStr + "<input type='checkbox' name='selected' id = c"+ newElId+"></header>");
+		var innerBtnId = "c" + year + sem;
+		//var innerBtn = $(innerBtnStr);
+        $(newEl).append("<header class='semester_name'>" + headerStr + '<button data-show="on" onclick="clearSemester('+ "\'" + innerBtnId + "\'" + ')"> Clear Semester</button>' + "<input type='checkbox' name='selected' id = c"+ newElId+"></header>");
 
 
 		var innerDivId = "p" + year + sem;
         var innerDivStr = '<div class="target semester_plan"></div>';
         var innerDiv = $(innerDivStr);
-		var innerBtnId = "c" + year + sem;
-		var innerBtnStr = '<button data-show="on" onclick="clearSemester(this.id)"> Clear Semester</button>';
-		var innerBtn = $(innerBtnStr);
-        
-		$(innerBtn).attr('id', innerBtnId);
-		$(newEl).append(innerBtn);
+		
         $(innerDiv).attr('id', innerDivId);
         $(innerDiv).data("currentHours", 0);
         $(newEl).append(innerDiv);
