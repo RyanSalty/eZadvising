@@ -494,8 +494,7 @@ function semShown(dmv){
 }
 
 function showHideSemesters(){
-  //#TODO how to make hidden semesters come back. would have to be all at once.
-    alert("clicked");
+   // alert("clicked");
     //get date of first planned for student or current semester and show whichever
 // is earlier
     var now = new Date();
@@ -524,53 +523,113 @@ function showHideSemesters(){
 
     //alert("clicked first semester is " + startYear + startSem);
     //loop through all boxes, if check, change display.
+    //TODO if it's already hidden, the confirmation should not happen again.
     for(var i = 0; i < 5; i++) {
-       // alert("cs" + year + "1" + " " + document.getElementById("cs" + year + "1").checked);
-        if (document.getElementById("cs" + year + "1").checked){
+        //alert("cs" + year + "1" + " " + document.getElementById("cs" + year + "1").checked + " i=" + i);
+        if (document.getElementById("cs" + year + "1").checked) {
+            //  alert("cs" + year + "1" + " " + document.getElementById("cs" + year + "1").checked);
             var id = "s" + year + "1";
             var id2 = "p" + year + "1";
+            var hideId = "h" + year + 1;
             //check to see if courses present on hidden semester,
             //alert("DIV S"+ document.getElementById(id).hasChildNodes());
             if (document.getElementById(id2).hasChildNodes()) {
-                var b = confirm("Are you sure you wish to hide "+getSemesterName(1) +" "+ year+" with already planned courses?");
-                if (b == true) {
-                    document.getElementById(id).style.display = "none";
-                    var hiddenCourse = "<div id ='hide' class = 'error'>Courses Hidden!</div>";
-
-                    $('#eligibleSwitch').append(hiddenCourse);
+                //if(!document.getElementById(id2).style.display == "none") {
+                    var b = confirm("Are you sure you wish to hide " + getSemesterName(1) + " " + year + " with already planned courses?");
+                    if (b == true) {
+                        document.getElementById(id).style.display = "none";
+                        document.getElementById(hideId).style.display = "block";
+                        document.getElementById('hide').style.display = "block";
+                    }
                 }
-            }
+
             //if so, change to remove current class and ass req_hidden class
-           else {
+            else {
                 document.getElementById(id).style.display = "none";
+                document.getElementById(hideId).style.display = "block";
             }
         }
-    }
         year++;
         for (var j = 2; j < 7; j++) {
-         //   alert("cs" + year + j + " " + document.getElementById("cs" + year + j).checked);
+           // alert("cs" + year + j + " " + document.getElementById("cs" + year + j).checked + " j=" + j);
             if (document.getElementById("cs" + year + j).checked) {
+                //       alert("cs" + year + j + " " + document.getElementById("cs" + year + j).checked);
                 var id3 = "s" + year + j;
                 var id4 = "p" + year + j;
+                var hideId2 = "h" + year + j;
                 //alert("DIV S"+ document.getElementById(id).hasChildNodes());
                 if (document.getElementById(id4).hasChildNodes()) {
-                    var c = confirm("Are you sure you wish to hide "+getSemesterName(j) + " "+year+" with already planned courses?");
+                    var c = confirm("Are you sure you wish to hide " + getSemesterName(j) + " " + year + " with already planned courses?");
                     if (c == true) {
                         document.getElementById(id3).style.display = "none";
+                        document.getElementById(hideId2).style.display = "block";
                         //var img = document.createElement("img");
                         //img.src = "http://www.google.com/imgres?imgurl=http://studio665.com/wp-content/uploads/2013/11/exclamation-point-sign-red-triangle_2.png&imgrefurl=http://studio665.com/salsa-class-cancelled/&h=256&w=256&tbnid=JPnZgevurUm63M:&docid=-4gwbmEmRQLuwM&ei=MwpCVtGfPMT0mAGZ6pOACg&tbm=isch&ved=0CC0QMygRMBFqFQoTCJGFv4GThskCFUQ6JgodGfUEoA";
-                        var hiddenCourse = "<div id ='hide' class = 'error'>Courses Hidden!</div>";
-                        $('#eligibleSwitch').append(hiddenCourse);
+                        document.getElementById('hide').style.display = "block";
                     }
                 }
                 else {
                     document.getElementById(id3).style.display = "none";
+                    document.getElementById(hideId2).style.display = "block";
+
                 }
             }
         }
+    }
 
 }
 
+function showAll(){
+    var checkboxID = "";
+    var blockID = "";
+    var hideID = "";
+    var now = new Date();
+    var nowYear = now.getFullYear();
+    var nowMonth = now.getMonth();
+    var year;
+    var sem;
+
+    if (nowMonth >= 1 && nowMonth <= 5) //spring
+    {
+        sem = 2;
+       year = nowYear;
+    }
+    else if (nowMonth >= 6 && nowMonth <= 12) //fall
+    {
+        sem = 1;
+        year = nowYear;
+    }
+    else {
+        sem = 2;
+        year = nowYear;
+    }
+
+
+//loop through everything on plan
+for(var i = 0; i < 5; i++){//five years
+    checkboxID = "cs" + year + "1";
+    blockID = "s" + year +"1";
+    hideID = "h" + year + "1";
+   // alert(checkboxID +" "+ blockID);
+    if(document.getElementById(checkboxID).checked){
+        document.getElementById(blockID).style.display = "block";//bring back semester block
+        document.getElementById(hideID).style.display = "none";//hide div that holds hidden semester spot
+
+    }
+    year++;
+    for(var j = 2; j < 7; j++){
+        checkboxID = "cs" + year +j;
+        blockID = "s" + year +j;
+        hideID = "h" + year +j;
+       // alert(checkboxID + " "+ blockID);
+        if(document.getElementById(checkboxID).checked){
+            document.getElementById(blockID).style.display = "block";//bring semester back
+            document.getElementById(hideID).style.display = "none";//hide hive that holds hidden semester spot
+        }
+    }
+}
+
+}
 
 function verticalScaling(){
 	
@@ -690,7 +749,7 @@ function clearPlan($token, $studentId) { //function called by clear button at to
 	}
 
 function initState() {
-
+document.getElementById('hide').style.display = 'none';
 //get user id from session or redirect to login (wiht message to come back)
 //student meets prereqs based on already loaded classes
 //would student meet prereq based on already loaded plus plan
@@ -875,8 +934,14 @@ function initSemesterStart() {
         $(newEl).append(innerDiv);
         $(newEl).append("<footer class='stats' id='fstats" + innerDivId + "'>0</footer>");
 
+        var hideID = "h" + year + sem;
+        var hiddenSemesterDiv = '<div class="semester_hidden" id="'+hideID+'"></div>'
+
 
         $('#thePlan').append(newEl);
+       $('#thePlan').append(hiddenSemesterDiv);
+
+
 
         if(i >= 24){
             document.getElementById(newElId).style.display = "none";
@@ -1158,7 +1223,7 @@ function handleDropEventOnPlan(event, ui) {
         //TODO don't hardcode program id, pull from student session data
         var programId = 1;
 
-        var hours = 0;
+        var  hours = 0;
         hours = parseInt($("#op" + reqId + " #opt" + courseId).data("hours"));
         var hoursRequired = parseInt($("#r" + reqId).data("hours"));
         var hoursCounting = parseInt($("#r" + reqId).data("hoursCounting"));

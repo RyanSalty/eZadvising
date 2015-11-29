@@ -72,7 +72,7 @@ $_SESSION['token'] = "ABC";
                 <td>
                     <button data-show="on" onclick="showHideSummers()"> Show/Hide Summers</button>
                     <button data-show="on" onclick="showHideSemesters()"> Hide Semesters</button>
-                    <button data-show="on" onclick="semShown(semesters.value)"> Show All</button>
+                    <button data-show="on" onclick="showAll()"> Show All</button>
                 </td>
                 <td>
                     <select name ="semesters" id = "semesters" onchange="semShown(semesters.value)">
@@ -143,6 +143,10 @@ $_SESSION['token'] = "ABC";
             <input type="checkbox" id="semCheckBox"/>
             <span>Highlight Courses Eligible </span>
             <select id="semList"></select>
+            <!--when there are semesters hidden, perhaps adding a list of those hidden to then
+             give the user the ability to show individual semesters rather than bringing all
+             hidden boxed back at once-->
+            <div id ='hide' class = 'error'>Courses Hidden!</div>
         </div>
         <div id="stillRequiredList">
 		
