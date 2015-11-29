@@ -25,16 +25,34 @@ $_SESSION['token'] = "ABC";
 </div>
 <div id="wrapper">
 
-    <div id="left">
-        <table>
-            <tr>
-                <th>Requirements</th>
-            </tr>
-        </table>
-        <div id="currentState">
+   <div id="left">
+    <table>
+        <tr>
+            <th>Requirements</th>
+        </tr>
+    </table>
+<!--
+    <select id="select" onchange="filterState()" style="margin-bottom:15px">
+        <option id="all" value="0">All</option>
+        <option id="1" value="1">Core</option>
+        <option id="2" value="2">Foundation</option>
+        <option id="3" value="3">Major</option>
+    </select>
+-->
 
-        </div>
+<!-- Updated from dropdown to a checkbox for Sprint 2 SPG 11/10/2015 -->
+        <form id="select" action="#" method="post">
+            <input type="checkbox" name="check_list[]" value="0" checked><label>All</label><br/>
+            <input type="checkbox" name="check_list[]" value="1"><label>Core</label><br/>
+            <input type="checkbox" name="check_list[]" value="2"><label>Foundation</label><br/>
+            <input type="checkbox" name="check_list[]" value="3"><label>Major</label><br/>
+            <input type="button" name="filterSubmit" value="Submit" onclick="filterState()"/>
+        </form>
+
+    <div id="currentState">
+
     </div>
+</div>
 
     <!-- newlayout <div id="col23"> -->
 
@@ -92,6 +110,35 @@ $_SESSION['token'] = "ABC";
                 <th>Need to Take</th>
             </tr>
         </table>
+<!-- A notification on the right side to show the current filter set SPG 11/10/2015-->
+		<div id="filterNotify" style="margin-bottom: 15px">
+            <table id="notify_table">
+                <tr>
+                    <th>You are filtering Requirements by: </th>
+                </tr>
+            </table>
+            <div id="zeroNotify" title="0">
+                <tr>
+                    <td> **All** </td>
+                </tr>
+            </div>
+            <div id="oneNotify" title="1">
+                <tr>
+                    <td> Core </td>
+                </tr>
+            </div>
+            <div id="twoNotify" title="2">
+                <tr>
+                    <td> Foundation </td>
+                </tr>
+            </div>
+            <div id="threeNotify" title="3">
+                <tr>
+                    <td> Major </td>
+                </tr>
+            </div>
+
+        </div>
         <div id="eligibleSwitch">
             <input type="checkbox" id="semCheckBox"/>
             <span>Highlight Courses Eligible </span>
