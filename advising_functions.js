@@ -440,6 +440,7 @@ function showAll(){
         blockID = "s" + year +"1";
         hideID = "h" + year + "1";
         // alert(checkboxID +" "+ blockID);
+        console.log("checkboxID:"+checkboxID +" blockID:"+ blockID+" year"+year);
         if(document.getElementById(checkboxID).checked){
             document.getElementById(blockID).style.display = "block";//bring back semester block
             document.getElementById(hideID).style.display = "none";//hide div that holds hidden semester spot
@@ -453,11 +454,11 @@ function showAll(){
             // alert(checkboxID + " "+ blockID);
             if(document.getElementById(checkboxID).checked){
                 document.getElementById(blockID).style.display = "block";//bring semester back
-                document.getElementById(hideID).style.display = "none";//hide hive that holds hidden semester spot
+//                document.getElementById(hideID).style.display = "none";//hide div that holds hidden semester spot
             }
         }
     }
-
+    document.getElementById("courseWarning").style.display="none";
 }
 
 function showHideSummers() {
@@ -471,13 +472,13 @@ function semShown(dmv){
  var lastYear = year + 5;
  var end2Year = year + 2;
  var end4Year = year + 4;
- alert('in semShown function ' + dmv + ' passed to function.');
-    alert(dmv);
+// alert('in semShown function ' + dmv + ' passed to function.');
+//    alert(dmv);
 //    document.getElementById('hide').style.display = "none";
     switch (dmv){
     //decrease to 2 years
         case "2":
-        alert("decrease to 2 years.");
+//        alert("decrease to 2 years.");
     //hide from 3-5 year
             for(var j = 0; j < 3; j++){
                 for(var i = 6; i > 1; i--){
@@ -496,7 +497,7 @@ function semShown(dmv){
 
     //increase to 5 years
         case "5":
-        alert("increase to 5 years.");
+//        alert("increase to 5 years.");
             id = "s" + end2Year + "1";
             document.getElementById(id).style.display = "block";
           //  document.getElementById(id2).style.checked(false);
@@ -514,7 +515,7 @@ function semShown(dmv){
         break;
 
         case "4" :
-            alert("back to default 4");
+//            alert("back to default 4");
            for(var n = end4Year; n > year; n--){
                //alert("outside: s"+n + "1");
             for(var m = 2; m < 7; m++){
@@ -615,8 +616,9 @@ function showHideSemesters(){
                         document.getElementById(id3).style.display = "none";
                         //var img = document.createElement("img");
                         //img.src = "http://www.google.com/imgres?imgurl=http://studio665.com/wp-content/uploads/2013/11/exclamation-point-sign-red-triangle_2.png&imgrefurl=http://studio665.com/salsa-class-cancelled/&h=256&w=256&tbnid=JPnZgevurUm63M:&docid=-4gwbmEmRQLuwM&ei=MwpCVtGfPMT0mAGZ6pOACg&tbm=isch&ved=0CC0QMygRMBFqFQoTCJGFv4GThskCFUQ6JgodGfUEoA";
-                        var hiddenCourse = "<div id ='hide' class = 'error'>Courses Hidden!</div>";
-                        $('#eligibleSwitch').append(hiddenCourse);
+//                        var hiddenCourse = "<div id ='hide' class = 'error'>Courses Hidden!</div>";
+//                        $('#eligibleSwitch').append(hiddenCourse);
+                          document.getElementById("courseWarning").style.display = "block";
                     }
                 }
                 else {
