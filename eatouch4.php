@@ -7,7 +7,7 @@ $_SESSION['token'] = "ABC";
 /** scrape for course availability **/
 ?>
 <!DOCTYPE html>
-<html>
+<html xmlns:display="http://www.w3.org/1999/xhtml">
 <head>
     <title> eZAdvising </title>
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
@@ -25,6 +25,7 @@ $_SESSION['token'] = "ABC";
 </div>
 <div id="wrapper">
 
+<<<<<<< HEAD
    <div id="left">
     <table>
         <tr>
@@ -50,6 +51,31 @@ $_SESSION['token'] = "ABC";
         </form>
 
     <div id="currentState">
+=======
+    <div id="left">
+        <table>
+            <tr>
+                <th>Requirements</th>
+            </tr>
+        </table>
+<!--    <select id="select" onchange="filterState()" style="margin-bottom:15px">
+            <option id="all" value="0">All</option>
+            <option id="1" value="1">Core</option>
+            <option id="2" value="2">Foundation</option>
+            <option id="3" value="3">Major</option>
+        </select>
+-->
+        <!-- Updated from dropdown to a checkbox for Sprint 2 SPG 11/10/2015 -->
+        <form id="select" action="#" method="post">
+            <input type="checkbox" id="checkbox1_master" name="check_list[]" value="0" onchange="toggleCheckBoxes(this,'cb1group')" checked><label>Toggle All</label><br/>
+            <input type="checkbox" id="cb1_1" name="check_list[]" class="cb1group" value="1" checked><label>Core</label><br/>
+            <input type="checkbox" id="cb1_2" name="check_list[]" class="cb1group" value="2" checked><label>Foundation</label><br/>
+            <input type="checkbox" id="cd1_3" name="check_list[]" class="cb1group" value="3" checked><label>Major</label><br/>
+            <input type="button" name="filterSubmit" value="Submit" onclick="filterState();filterNotify()"/>
+        </form>
+
+        <div id="currentState">
+>>>>>>> filtering
 
     </div>
 </div>
@@ -61,7 +87,7 @@ $_SESSION['token'] = "ABC";
             <tr>
                 <th>Plan</th>
             </tr>
-				
+
             <tr></tr>
         </table>
 
@@ -74,23 +100,7 @@ $_SESSION['token'] = "ABC";
                     <button data-show="on" onclick="showHideSemesters()"> Hide Semesters</button>
                     <button data-show="on" onclick="showAll()"> Show All</button>
                 </td>
-                <td>
-                    <select name ="semesters" id = "semesters" onchange="semShown(semesters.value)">
-                        <option value="4">4 Years</option>
-                        <option value="2">2 Years</option>
-                        <option value="5">5 Years</option>
-                    </select>
-                </td>
             </tr>
-			
-			<tr>
-				<td>
-					<button data-show="on" onclick="clearPlan();" > Clear Plan</button>
-				</td>
-			</tr>
-	
-
-			
             <!-- <tr> <td><button onclick="unplan()" > Save Plan </button> </td> </tr>
              <tr> <td><button onclick="unplan()" > Revert to Saved Plan </button></td></tr>
              -->
@@ -99,7 +109,6 @@ $_SESSION['token'] = "ABC";
 
     </div>
     <!-- end div main -->
-	
 
     <!-- newlayout </div> --><!-- end div col23 -->
 
@@ -110,6 +119,7 @@ $_SESSION['token'] = "ABC";
                 <th>Need to Take</th>
             </tr>
         </table>
+<<<<<<< HEAD
 <!-- A notification on the right side to show the current filter set SPG 11/10/2015-->
 		<div id="filterNotify" style="margin-bottom: 15px">
             <table id="notify_table">
@@ -138,6 +148,14 @@ $_SESSION['token'] = "ABC";
                 </tr>
             </div>
 
+=======
+        <div id="filterNotify" style="display: none">
+            <table id="notify_table">
+                <tr>
+                    <th>WARNING! You currently have filters on.</th>
+                </tr>
+            </table>
+>>>>>>> filtering
         </div>
         <div id="eligibleSwitch">
             <input type="checkbox" id="semCheckBox"/>
@@ -149,9 +167,8 @@ $_SESSION['token'] = "ABC";
             <div id ='hide' class = 'error'>Courses Hidden!</div>
         </div>
         <div id="stillRequiredList">
-		
+
         </div>
-		
 
         <!-- end stillRequiredList div -->
 

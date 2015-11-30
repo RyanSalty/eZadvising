@@ -157,6 +157,7 @@ function validateToken($studentId, $token)
     return true;
 }
 
+<<<<<<< HEAD
 function clearSemester($token, $studentId, $year, $semester)
 {
     try {
@@ -222,6 +223,8 @@ function clearPlan($token, $studentId)
 
 }
 
+=======
+>>>>>>> filtering
 //UPDATED DONE USED
 function getUpdatedRequirementForStudent($token, $studentId, $reqId, $programId, $year)
 {
