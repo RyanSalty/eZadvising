@@ -329,15 +329,11 @@ div.error {
 
 /*********  Styling for  semester PLAN boxes **********/
 
-
-
-div.semester_block header.semester_name{
+div.semester_block header.semester_name {
     background-color: lightgray;
     padding: 4px;
     font-size: .85rem;
 }
-
-
 
 div.semester_block {
     background-color: white;
@@ -359,9 +355,6 @@ div.semester_block footer {
     text-align: right;
     border-top: 1px solid black;
 }
-
-
-
 
 /* actual droppable part */
 div.semester_plan {

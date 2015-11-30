@@ -21,15 +21,22 @@ function processReqUpdate(req, update) {
 
     //build base classes
     var classStr = "req_box";
+<<<<<<< HEAD
     //TODO: add classes for category
+=======
+
+>>>>>>> filtering
 //    var category = req.category;
     // From the database
     // 1 = Core
     // 2 = Foundation
     // 3 = Major
+<<<<<<< HEAD
     /* if(req.category==2) classStr+=" foundation";
      else if(req.category==3) classStr+=" major";
      */
+=======
+>>>>>>> filtering
 
     //create the MAIN requirement box element
     //group name is the requirement name (now comes from program_requirements.title)
@@ -260,6 +267,7 @@ function processReqUpdate(req, update) {
     //Add stats to right side box
     $(newElWorking).append("<span class='stats'> need:" + needed + "</span>");
 <<<<<<< HEAD
+<<<<<<< HEAD
 	
 	$(newElWorking).attr("category", req['category']);
 
@@ -267,6 +275,16 @@ function processReqUpdate(req, update) {
     // groupName not currently used
     $(newEl).attr("groupName", req['groupName']);	
 	$(newEl).attr("category", req['category']);
+=======
+    //ADDED SPG
+    $(newElWorking).attr("category", req['category']);
+
+
+    // groupName not currently used
+    $(newEl).attr("groupName", req['groupName']);
+    //ADDED SPG
+    $(newEl).attr("category", req['category']);
+>>>>>>> filtering
 =======
     //ADDED SPG
     $(newElWorking).attr("category", req['category']);
@@ -654,16 +672,16 @@ function verticalScaling(){
 	var now = new Date();
 	var year = now.getFullYear();
 	var sem = 1;
-	
+
 	classTotal = $('#p'+ year +'1 div.req_box').length;
 	for(i=0;i<24;i++){
 		var pBoxId = "p" + year + sem;
-		
+
 		if($('#' + pBoxId + ' div.req_box').length > classTotal){
 			classTotal = $('#' + pBoxId + ' div.req_box').length;
 		}
 		sem++;
-			
+
 		if(sem >6){
 			sem = 1;
 			year++;
@@ -675,23 +693,23 @@ function verticalScaling(){
 		var sHeight = (classTotal + 2) * 4.75;
 		var semester_plan = document.getElementById("s"+ year + "1");
 		semester_plan.style.height = sHeight + "rem";
-		
+
 		var semester_plan2 = document.getElementById("p"+year+"1");
 		semester_plan2.style.height = pHeight + "rem";
-		
+
 		year++;
 		sem = 1;
 		for(i=0;i<24;i++){
 		var sBoxId = "s" + year + sem;
 		semester_plan = document.getElementById(sBoxId);
 		semester_plan.style.height =  sHeight + "rem";
-		
+
 		var boxId = "p" + year + sem;
 		semester_plan2 = document.getElementById(boxId);
 		semester_plan2.style.height = pHeight + "rem";
-		
+
 		sem++;
-		
+
 		if(sem >6){
 			sem = 1;
 			year++;
@@ -703,29 +721,29 @@ function verticalScaling(){
 		year = now.getFullYear();
 		var semester_plan = document.getElementById("s"+year+"1");
 		semester_plan.style.height = "31.5rem";
-		
+
 		var semester_plan2 = document.getElementById("p"+year+"1");
 		semester_plan2.style.height = "26.75rem";
-		
+
 		year = now.getFullYear() + 1;
 		sem = 1;
 		for(i=0;i<24;i++){
 			var sBoxId = "s" + year + sem;
 			semester_plan = document.getElementById(sBoxId);
 			semester_plan.style.height =  "31.5rem";
-			
+
 			var boxId = "p" + year + sem;
 			semester_plan2 = document.getElementById(boxId);
 			semester_plan2.style.height = "26.75rem";
-			
+
 			sem++;
-			
+
 			if(sem >6){
 				sem = 1;
 				year++;
 			}
 		}
-		
+
 	}
 
 }
@@ -742,16 +760,16 @@ function clearSemester(innerDivId){ //function called by button in each semester
 			type: "POST",
 			url: "clearSemester.php?year="+year+"&semester="+semester,
 			data:{
-				year : year, 
+				year : year,
 				semester : semester,
 			},
 			success: function (result) {
-				location.reload(); 
+				location.reload();
 			}//end success
 		});//end ajax
 	}
 }
-	
+
 function clearPlan($token, $studentId) { //function called by clear button at top of plan. clears all classes from plan.
 	var c = confirm("Are you sure you want to clear all planned classes?"); //confirmation prompt
 	if(c==true){
@@ -759,7 +777,7 @@ function clearPlan($token, $studentId) { //function called by clear button at to
 			type: "POST",
 			url: "clearPlan.php",
 			success: function (result) {
-				location.reload(); 
+				location.reload();
 			}//end success
 		});//end ajax
 		}
@@ -806,91 +824,6 @@ function isInArray(value, array) {
     return array.indexOf(value) > -1;
 }
 <<<<<<< HEAD
-
-function filterState() {
-//This currently will filter both the requirement and working side of the code. If the class only decides to do the req side we can eliminate stillRequiredList code. - SPG
-
-   var chosen= document.getElementById("select");
-//   var selectNumber = chosen.value;
-   var selectNumber = []; 
-
-    for (var i=0; i<chosen.length; i++) {
-        if (chosen[i].checked) {
-            selectNumber.push(chosen[i].value);
-        }
-    }
-
-//If All is selected then the number is 0 which just sets all children to block. This is also the default setting. - SPG
-    if(selectNumber == 0){
-        $('#currentState').children('div').each(function(){
-            var innerDivId = $(this).attr('id');
-            var currReqBox = document.getElementById(innerDivId)
-            currReqBox.style.display = "block";
-        });
-        $('#stillRequiredList').children('div').each(function(){
-            var innerDivId = $(this).attr('id');
-            var currReqBox = document.getElementById(innerDivId)
-            currReqBox.style.display = "block";
-        });
-        $('#filterNotify').children('div').each(function() {
-           var innerDivId = $(this).attr('id');
-           var currNotify = document.getElementById(innerDivId)
-           currNotify.style.display = "block";
-        });
-        return;
-    }
-
-//    console.log(selectNumber);
-for (var i=0; i<selectNumber.length; i++) {
-    $('#currentState').children('div').each(function () {
-        var innerDivId = $(this).attr('id');
-//        console.log(innerDivId);
-
-        var currReqBox = document.getElementById(innerDivId);
-        var currCat = currReqBox.getAttribute('category');
-
-        console.log(currCat);
-//        if (currCat == selectNumber[i] ) {
-        if (isInArray(currCat,selectNumber)) {
-            currReqBox.style.display = "block";
-//            console.log("in the if statement with val of " + value);
-//            console.log(currReqBox.category);
-        } else {
-            currReqBox.style.display = "none";
-        }
-    });
-    $('#stillRequiredList').children('div').each(function () {
-        var innerDivId = $(this).attr('id');
-//        console.log(innerDivId);
-
-        var currReqBox = document.getElementById(innerDivId);
-        var currCat = currReqBox.getAttribute('category');
-
-        console.log(currCat);
-//        if (currCat == selectNumber[i]) {
-        if (isInArray(currCat,selectNumber)) {
-            currReqBox.style.display = "block";
-        } else {
-            currReqBox.style.display = "none";
-        }
-    });
-    $('#filterNotify').children('div').each(function () {
-        var innerDivId = $(this).attr('id');
-
-        var currNotify = document.getElementById(innerDivId);
-        var currCat = currNotify.getAttribute('title');
-
-        if (isInArray(currCat,selectNumber)) {
-            currNotify.style.display = "block";
-        } else {
-            currNotify.style.display = "none";
-        }
-    });
-}
-
-} // end of filterState()
-=======
->>>>>>> filtering
 
 function toggleCheckBoxes(master,group){
     var boxArray = document.getElementsByClassName(group);
@@ -983,8 +916,105 @@ for (var i=0; i<selectNumber.length; i++) {
 }
 
 } // end of filterState()
+=======
+>>>>>>> filtering
+
+function toggleCheckBoxes(master,group){
+    var boxArray = document.getElementsByClassName(group);
+    for(var i=0; i<boxArray.length; i++){
+        var checkbox = document.getElementById(boxArray[i].id);
+        checkbox.checked = master.checked;
+    }
+}
+
+function filterNotify(){
+    var inputElems = document.getElementsByName("check_list[]"),
+        notifyDiv = document.getElementById("filterNotify"),
+        count = 0,
+        totalBoxes = 0;
+    for (var i=0; i<inputElems.length; i++) {
+        if (inputElems[i].type === "checkbox" && inputElems[i].checked === true) {
+            count++;
+        }
+        totalBoxes++;
+    }
+    if(count == 0 || count == totalBoxes){
+        notifyDiv.style.display = "none";
+    }else{
+        notifyDiv.style.display = "block";
+    }
+}
+
+<<<<<<< HEAD
+function filterState() {
+//This currently will filter both the requirement and working side of the code. If the class only decides to do the req side we can eliminate stillRequiredList code. - SPG
+
+   var chosen= document.getElementById("select");
+//   var selectNumber = chosen.value;
+   var selectNumber = [];
+
+    for (var i=0; i<chosen.length; i++) {
+        if (chosen[i].checked) {
+            selectNumber.push(chosen[i].value);
+        }
+    }
+
+//If All is selected then the number is 0 which just sets all children to block. This is also the default setting. - SPG
+    if(selectNumber == 0){
+        $('#currentState').children('div').each(function(){
+            var innerDivId = $(this).attr('id');
+            var currReqBox = document.getElementById(innerDivId)
+            currReqBox.style.display = "block";
+        });
+        $('#stillRequiredList').children('div').each(function(){
+            var innerDivId = $(this).attr('id');
+            var currReqBox = document.getElementById(innerDivId)
+            currReqBox.style.display = "block";
+        });
+        return;
+    }
+
+//    console.log(selectNumber);
+for (var i=0; i<selectNumber.length; i++) {
+    $('#currentState').children('div').each(function () {
+        var innerDivId = $(this).attr('id');
+//        console.log(innerDivId);
+
+        var currReqBox = document.getElementById(innerDivId);
+        var currCat = currReqBox.getAttribute('category');
+
+        console.log(currCat);
+//        if (currCat == selectNumber[i] ) {
+        if (isInArray(currCat,selectNumber)) {
+            currReqBox.style.display = "block";
+//            console.log("in the if statement with val of " + value);
+//            console.log(currReqBox.category);
+        } else {
+            currReqBox.style.display = "none";
+        }
+    });
+    $('#stillRequiredList').children('div').each(function () {
+        var innerDivId = $(this).attr('id');
+//        console.log(innerDivId);
+
+        var currReqBox = document.getElementById(innerDivId);
+        var currCat = currReqBox.getAttribute('category');
+
+        console.log(currCat);
+//        if (currCat == selectNumber[i]) {
+        if (isInArray(currCat,selectNumber)) {
+            currReqBox.style.display = "block";
+        } else {
+            currReqBox.style.display = "none";
+        }
+    });
+}
+
+} // end of filterState()
 
 
+=======
+>>>>>>> filtering
 function initSemesterStart() {
 
 //get date of first planned for student or current semester and show whichever
@@ -1043,7 +1073,7 @@ function initSemesterStart() {
 >>>>>>> filtering
         var innerDivStr = '<div class="target semester_plan"></div>';
         var innerDiv = $(innerDivStr);
-		
+
         $(innerDiv).attr('id', innerDivId);
         $(innerDiv).data("currentHours", 0);
         $(newEl).append(innerDiv);
@@ -1110,7 +1140,7 @@ function handleDropEventOnRequired(event, ui) {
     //it doesn't exist
 //}
 	verticalScaling();
-	
+
     var sourceId = ui.draggable.attr('id');
     if (sourceId.substr(0, 1) == "w") {
 
@@ -1136,7 +1166,7 @@ function handleDropEventOnRequired(event, ui) {
 //TODO - redo this whole method to undo the plan
 //redo this one, on drop on plan adjust semester hours, get from semester/year TODO
 function handleDropEventOnWorking(event, ui) {
-	
+
 	verticalScaling();
 
     var targId = $(this).attr('id');
@@ -1272,12 +1302,11 @@ function handleDropEventOnWorking(event, ui) {
 
 //TODO add function for changing drop-down selection on plan
 function handleDropEventOnPlan(event, ui) {
-	
+
 	verticalScaling();
 
     var targId = $(this).attr('id');
 
-	
     //if prereqs met and course offered, let it drop
     //update planned course record
     //if (true) {

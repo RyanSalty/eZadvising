@@ -26,6 +26,7 @@ $_SESSION['token'] = "ABC";
 <div id="wrapper">
 
 <<<<<<< HEAD
+<<<<<<< HEAD
    <div id="left">
     <table>
         <tr>
@@ -39,17 +40,31 @@ $_SESSION['token'] = "ABC";
         <option id="2" value="2">Foundation</option>
         <option id="3" value="3">Major</option>
     </select>
+=======
+    <div id="left">
+        <table>
+            <tr>
+                <th>Requirements</th>
+            </tr>
+        </table>
+<!--    <select id="select" onchange="filterState()" style="margin-bottom:15px">
+            <option id="all" value="0">All</option>
+            <option id="1" value="1">Core</option>
+            <option id="2" value="2">Foundation</option>
+            <option id="3" value="3">Major</option>
+        </select>
+>>>>>>> filtering
 -->
-
-<!-- Updated from dropdown to a checkbox for Sprint 2 SPG 11/10/2015 -->
+        <!-- Updated from dropdown to a checkbox for Sprint 2 SPG 11/10/2015 -->
         <form id="select" action="#" method="post">
-            <input type="checkbox" name="check_list[]" value="0" checked><label>All</label><br/>
-            <input type="checkbox" name="check_list[]" value="1"><label>Core</label><br/>
-            <input type="checkbox" name="check_list[]" value="2"><label>Foundation</label><br/>
-            <input type="checkbox" name="check_list[]" value="3"><label>Major</label><br/>
-            <input type="button" name="filterSubmit" value="Submit" onclick="filterState()"/>
+            <input type="checkbox" id="checkbox1_master" name="check_list[]" value="0" onchange="toggleCheckBoxes(this,'cb1group')" checked><label>Toggle All</label><br/>
+            <input type="checkbox" id="cb1_1" name="check_list[]" class="cb1group" value="1" checked><label>Core</label><br/>
+            <input type="checkbox" id="cb1_2" name="check_list[]" class="cb1group" value="2" checked><label>Foundation</label><br/>
+            <input type="checkbox" id="cd1_3" name="check_list[]" class="cb1group" value="3" checked><label>Major</label><br/>
+            <input type="button" name="filterSubmit" value="Submit" onclick="filterState();filterNotify()"/>
         </form>
 
+<<<<<<< HEAD
     <div id="currentState">
 =======
     <div id="left">
@@ -76,9 +91,12 @@ $_SESSION['token'] = "ABC";
 
         <div id="currentState">
 >>>>>>> filtering
+=======
+        <div id="currentState">
+>>>>>>> filtering
 
+        </div>
     </div>
-</div>
 
     <!-- newlayout <div id="col23"> -->
 
@@ -120,13 +138,18 @@ $_SESSION['token'] = "ABC";
             </tr>
         </table>
 <<<<<<< HEAD
+<<<<<<< HEAD
 <!-- A notification on the right side to show the current filter set SPG 11/10/2015-->
 		<div id="filterNotify" style="margin-bottom: 15px">
+=======
+        <div id="filterNotify" style="display: none">
+>>>>>>> filtering
             <table id="notify_table">
                 <tr>
-                    <th>You are filtering Requirements by: </th>
+                    <th>WARNING! You currently have filters on.</th>
                 </tr>
             </table>
+<<<<<<< HEAD
             <div id="zeroNotify" title="0">
                 <tr>
                     <td> **All** </td>
@@ -155,6 +178,8 @@ $_SESSION['token'] = "ABC";
                     <th>WARNING! You currently have filters on.</th>
                 </tr>
             </table>
+>>>>>>> filtering
+=======
 >>>>>>> filtering
         </div>
         <div id="eligibleSwitch">
