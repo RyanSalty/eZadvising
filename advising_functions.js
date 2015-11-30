@@ -408,6 +408,58 @@ $(initState);
 
 $(init);
 
+function showAll(){
+    var checkboxID = "";
+    var blockID = "";
+    var hideID = "";
+    var now = new Date();
+    var nowYear = now.getFullYear();
+    var nowMonth = now.getMonth();
+    var year;
+    var sem;
+
+    if (nowMonth >= 1 && nowMonth <= 5) //spring
+    {
+        sem = 2;
+        year = nowYear;
+    }
+    else if (nowMonth >= 6 && nowMonth <= 12) //fall
+    {
+        sem = 1;
+        year = nowYear;
+    }
+    else {
+        sem = 2;
+        year = nowYear;
+    }
+
+
+//loop through everything on plan
+    for(var i = 0; i < 5; i++){//five years
+        checkboxID = "cs" + year + "1";
+        blockID = "s" + year +"1";
+        hideID = "h" + year + "1";
+        // alert(checkboxID +" "+ blockID);
+        if(document.getElementById(checkboxID).checked){
+            document.getElementById(blockID).style.display = "block";//bring back semester block
+            document.getElementById(hideID).style.display = "none";//hide div that holds hidden semester spot
+
+        }
+        year++;
+        for(var j = 2; j < 7; j++){
+            checkboxID = "cs" + year +j;
+            blockID = "s" + year +j;
+            hideID = "h" + year +j;
+            // alert(checkboxID + " "+ blockID);
+            if(document.getElementById(checkboxID).checked){
+                document.getElementById(blockID).style.display = "block";//bring semester back
+                document.getElementById(hideID).style.display = "none";//hide hive that holds hidden semester spot
+            }
+        }
+    }
+
+}
+
 function showHideSummers() {
     $(".semester_block.minor").toggle();
 }
@@ -498,7 +550,7 @@ function semShown(dmv){
 
 function showHideSemesters(){
   //#TODO how to make hidden semesters come back. would have to be all at once.
-    alert("clicked");
+//    alert("clicked");
     //get date of first planned for student or current semester and show whichever
 // is earlier
     var now = new Date();

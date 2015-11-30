@@ -321,7 +321,7 @@ div.req_on_plan {
 }
 
 div.error {
-    color: white;
+    color: red;
     text: red;
 }
 

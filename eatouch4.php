@@ -31,13 +31,7 @@ $_SESSION['token'] = "ABC";
                 <th>Requirements</th>
             </tr>
         </table>
-<!--    <select id="select" onchange="filterState()" style="margin-bottom:15px">
-            <option id="all" value="0">All</option>
-            <option id="1" value="1">Core</option>
-            <option id="2" value="2">Foundation</option>
-            <option id="3" value="3">Major</option>
-        </select>
--->
+
         <!-- Updated from dropdown to a checkbox for Sprint 2 SPG 11/10/2015 -->
         <form id="select" action="#" method="post">
             <input type="checkbox" id="checkbox1_master" name="check_list[]" value="0" onchange="toggleCheckBoxes(this,'cb1group')" checked><label>Toggle All</label><br/>
@@ -70,7 +64,7 @@ $_SESSION['token'] = "ABC";
                 <td>
                     <button data-show="on" onclick="showHideSummers()"> Show/Hide Summers</button>
                     <button data-show="on" onclick="showHideSemesters()"> Hide Semesters</button>
-                    <button data-show="on" onclick="semShown(semesters.value)"> Show All</button>
+                    <button data-show="on" onclick="showAll()"> Show All</button>
                 </td>
                 <td>
                     <select name ="semesters" id = "semesters" onchange="semShown(semesters.value)">
@@ -86,12 +80,7 @@ $_SESSION['token'] = "ABC";
 					<button data-show="on" onclick="clearPlan();" > Clear Plan</button>
 				</td>
 			</tr>
-	
 
-			
-            <!-- <tr> <td><button onclick="unplan()" > Save Plan </button> </td> </tr>
-             <tr> <td><button onclick="unplan()" > Revert to Saved Plan </button></td></tr>
-             -->
         </table>
         <div id="thePlan"></div>
 
