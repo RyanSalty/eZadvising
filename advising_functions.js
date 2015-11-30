@@ -417,12 +417,12 @@ function semShown(dmv){
  var lastYear = year + 5;
  var end2Year = year + 2;
  var end4Year = year + 4;
- alert('in semShown function ' + dmv + 'passed to function.');
+// alert('in semShown function ' + dmv + 'passed to function.');
     document.getElementById('hide').style.display = "none";
     switch (dmv){
     //decrease to 2 years
         case "2":
-        alert("decrese to 2 years.");
+      //  alert("decrese to 2 years.");
     //hide from 3-5 year
             for(var j = 0; j < 3; j++){
                 for(var i = 6; i > 1; i--){
@@ -440,7 +440,7 @@ function semShown(dmv){
 
     //increase to 5 years
         case "5":
-        alert("increase to 5 years.");
+      //  alert("increase to 5 years.");
             id = "s" + end2Year + "1";
             document.getElementById(id).style.display = "block";
           //  document.getElementById(id2).style.checked(false);
@@ -458,7 +458,7 @@ function semShown(dmv){
         break;
 
         case "4" :
-            alert("back to default 4");
+          //  alert("back to default 4");
            for(var n = end4Year; n > year; n--){
                //alert("outside: s"+n + "1");
             for(var m = 2; m < 7; m++){
