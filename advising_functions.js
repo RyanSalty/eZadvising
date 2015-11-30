@@ -629,6 +629,7 @@ for(var i = 0; i < 5; i++){//five years
             document.getElementById(hideID).style.display = "none";//hide hive that holds hidden semester spot
         }
     }
+    document.getElementById('hide').style.display="none";
 }
 
 }

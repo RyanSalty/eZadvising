@@ -109,13 +109,13 @@ $_SESSION['token'] = "ABC";
             <input type="checkbox" id="semCheckBox"/>
             <span>Highlight Courses Eligible </span>
             <select id="semList"></select>
-            <div id ='courseWarning' class = 'error' style="display: none">Courses Hidden!</div>
+            <div id ='hide' class = 'error' style="display: none">Courses Hidden!</div>
         </div>
         <div id="stillRequiredList">
 		
         </div>
 		
-
+s
         <!-- end stillRequiredList div -->
 
 
