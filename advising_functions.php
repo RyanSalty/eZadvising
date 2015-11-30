@@ -11,6 +11,7 @@
 //look at connection pooling with pdo
 //unit tests and harnessing
 //T4-7,7-10,4-7W,Thursday am
+
 require_once("config.php");
 require_once("pe.php");
 
@@ -237,7 +238,7 @@ function getUpdatedRequirementForStudent($token, $studentId, $reqId, $programId,
     try {
 
 
-        echo "req: ".$reqId.'end';
+        // echo "req: ".$reqId.'end';
 
         $conn = new PDO(DBCONNECTSTRING, DBUSER, DBPASSWORD);
         $sql = 'SELECT program_requirements.id as "reqId", program_requirements.category as "category", program_requirements.groupId as "groupId", title as "name", program_requirements.numCreditHours as "hours", program_requirements.minGrade as "grade" ';
@@ -246,7 +247,7 @@ function getUpdatedRequirementForStudent($token, $studentId, $reqId, $programId,
         $sql = $sql . ' program_requirements.programId=:programId AND program_requirements.catalogYear=:year';
         $sql = $sql . ' AND program_requirements.id=:reqId';
 
-        echo $programId.",".$year.",".$reqId.",";
+        // echo $programId.",".$year.",".$reqId.",";
 
         //$sql="select * from program_requirements where  program_requirements.id=:reqId AND program_requirements.catalogYear=:year AND program_requirements.programId=:programId";
         $stmt = $conn->prepare($sql);
