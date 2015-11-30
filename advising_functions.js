@@ -471,12 +471,13 @@ function semShown(dmv){
  var lastYear = year + 5;
  var end2Year = year + 2;
  var end4Year = year + 4;
- alert('in semShown function ' + dmv + 'passed to function.');
-    document.getElementById('hide').style.display = "none";
+ alert('in semShown function ' + dmv + ' passed to function.');
+    alert(dmv);
+//    document.getElementById('hide').style.display = "none";
     switch (dmv){
     //decrease to 2 years
         case "2":
-        alert("decrese to 2 years.");
+        alert("decrease to 2 years.");
     //hide from 3-5 year
             for(var j = 0; j < 3; j++){
                 for(var i = 6; i > 1; i--){
