@@ -7,7 +7,7 @@ $_SESSION['token'] = "ABC";
 /** scrape for course availability **/
 ?>
 <!DOCTYPE html>
-<html>
+<html xmlns:display="http://www.w3.org/1999/xhtml">
 <head>
     <title> eZAdvising </title>
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
@@ -25,28 +25,20 @@ $_SESSION['token'] = "ABC";
 </div>
 <div id="wrapper">
 
-   <div id="left">
-    <table>
-        <tr>
-            <th>Requirements</th>
-        </tr>
-    </table>
-<!--
-    <select id="select" onchange="filterState()" style="margin-bottom:15px">
-        <option id="all" value="0">All</option>
-        <option id="1" value="1">Core</option>
-        <option id="2" value="2">Foundation</option>
-        <option id="3" value="3">Major</option>
-    </select>
--->
+    <div id="left">
+        <table>
+            <tr>
+                <th>Requirements</th>
+            </tr>
+        </table>
 
-<!-- Updated from dropdown to a checkbox for Sprint 2 SPG 11/10/2015 -->
+        <!-- Updated from dropdown to a checkbox for Sprint 2 SPG 11/10/2015 -->
         <form id="select" action="#" method="post">
-            <input type="checkbox" name="check_list[]" value="0" checked><label>All</label><br/>
-            <input type="checkbox" name="check_list[]" value="1"><label>Core</label><br/>
-            <input type="checkbox" name="check_list[]" value="2"><label>Foundation</label><br/>
-            <input type="checkbox" name="check_list[]" value="3"><label>Major</label><br/>
-            <input type="button" name="filterSubmit" value="Submit" onclick="filterState()"/>
+            <input type="checkbox" id="checkbox1_master" name="check_list[]" value="0" onchange="toggleCheckBoxes(this,'cb1group')" checked><label>Toggle All</label><br/>
+            <input type="checkbox" id="cb1_1" name="check_list[]" class="cb1group" value="1" checked><label>Core</label><br/>
+            <input type="checkbox" id="cb1_2" name="check_list[]" class="cb1group" value="2" checked><label>Foundation</label><br/>
+            <input type="checkbox" id="cd1_3" name="check_list[]" class="cb1group" value="3" checked><label>Major</label><br/>
+            <input type="button" name="filterSubmit" value="Submit" onclick="filterState();filterNotify()"/>
         </form>
 
     <div id="currentState">
@@ -90,10 +82,6 @@ $_SESSION['token'] = "ABC";
 			</tr>
 	
 
-			
-            <!-- <tr> <td><button onclick="unplan()" > Save Plan </button> </td> </tr>
-             <tr> <td><button onclick="unplan()" > Revert to Saved Plan </button></td></tr>
-             -->
         </table>
         <div id="thePlan"></div>
 
@@ -110,43 +98,18 @@ $_SESSION['token'] = "ABC";
                 <th>Need to Take</th>
             </tr>
         </table>
-<!-- A notification on the right side to show the current filter set SPG 11/10/2015-->
-		<div id="filterNotify" style="margin-bottom: 15px">
+        <div id="filterNotify" style="display: none">
             <table id="notify_table">
                 <tr>
-                    <th>You are filtering Requirements by: </th>
+                    <th>WARNING! You currently have filters on.</th>
                 </tr>
             </table>
-            <div id="zeroNotify" title="0">
-                <tr>
-                    <td> **All** </td>
-                </tr>
-            </div>
-            <div id="oneNotify" title="1">
-                <tr>
-                    <td> Core </td>
-                </tr>
-            </div>
-            <div id="twoNotify" title="2">
-                <tr>
-                    <td> Foundation </td>
-                </tr>
-            </div>
-            <div id="threeNotify" title="3">
-                <tr>
-                    <td> Major </td>
-                </tr>
-            </div>
-
         </div>
         <div id="eligibleSwitch">
             <input type="checkbox" id="semCheckBox"/>
             <span>Highlight Courses Eligible </span>
             <select id="semList"></select>
-            <!--when there are semesters hidden, perhaps adding a list of those hidden to then
-             give the user the ability to show individual semesters rather than bringing all
-             hidden boxed back at once-->
-            <div id ='hide' class = 'error'>Courses Hidden!</div>
+            <div id ='courseWarning' class = 'error' style="display: none">Courses Hidden!</div>
         </div>
         <div id="stillRequiredList">
 		

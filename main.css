@@ -337,8 +337,6 @@ div.semester_block header.semester_name{
     font-size: .85rem;
 }
 
-
-
 div.semester_block {
     background-color: white;
     height: 31.5rem;
@@ -356,9 +354,6 @@ div.semester_block footer {
     text-align: right;
     border-top: 1px solid black;
 }
-
-
-
 
 /* actual droppable part */
 div.semester_plan {
@@ -482,4 +477,11 @@ div.taken, div.planned, div.options {
 #eligibleSwitch select {
     width: 100%;
     margin-bottom: 5px;
+}
+
+div.hidden{
+    display: none;
+}
+div.visible{
+    display: block;
 }
