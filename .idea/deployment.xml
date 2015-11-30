@@ -2,10 +2,10 @@
 <project version="4">
   <component name="PublishConfigData" serverName="ezadvising-master">
     <serverData>
-      <paths name="ezadvising-master">
+      <paths name="eadvising">
         <serverdata>
           <mappings>
-            <mapping local="$PROJECT_DIR$" web="eZadvising-master" />
+            <mapping local="$PROJECT_DIR$" web="/" />
           </mappings>
         </serverdata>
       </paths>
