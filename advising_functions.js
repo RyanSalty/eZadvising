@@ -945,7 +945,8 @@ function initSemesterStart() {
         $(newEl).append("<footer class='stats' id='fstats" + innerDivId + "'>0</footer>");
 
         var hideID = "h" + year + sem;
-        var hiddenSemesterDiv = '<div class="semester_hidden" id="'+hideID+'"></div>'
+        var hiddenSemesterDiv = '<div class="semester_hidden" onclick="showIndiSem(id)" id="'+hideID+'"></div>'
+
 
 
         $('#thePlan').append(newEl);
@@ -976,6 +977,11 @@ function highlightEligible() {
 //If multiple options, highlight lighter box and highlight options
 }
 
+function showIndiSem(hiddenID) {
+    document.getElementById(hiddenID).style.display = "none";
+    var id = "s" + hiddenID.substring(1, hiddenID.length);
+    document.getElementById(id).style.display = "block";
+}
 
 function init() {
     $('.req_box').draggable({
